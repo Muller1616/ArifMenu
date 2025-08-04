@@ -11,7 +11,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
   const merchants = [
     {
       id: 1,
-      logo: "/placeholder.svg?height=40&width=40&text=Celavie",
+      logo: "Celavie.png?height=40&width=40&text=Celavie",
       name: "Celavie Chicken and Burgers",
       contactPerson: "Girma Lemma",
       contactInfo: "+251 912345680",
@@ -20,7 +20,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 2,
-      logo: "/placeholder.svg?height=40&width=40&text=Dukamo",
+      logo: "Dukamo.png?height=40&width=40&text=Dukamo",
       name: "Dukamo Coffee",
       contactPerson: "Daniel Ambachew",
       contactInfo: "+251 932345681",
@@ -29,7 +29,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 3,
-      logo: "/placeholder.svg?height=40&width=40&text=FoodZone",
+      logo: "foodZone.png?height=40&width=40&text=FoodZone",
       name: "Food Zone Restaurant",
       contactPerson: "Lemlem Girmachew",
       contactInfo: "+251 952345682",
@@ -38,7 +38,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 4,
-      logo: "/placeholder.svg?height=40&width=40&text=Bella's",
+      logo: "bella.png?height=40&width=40&text=Bella's",
       name: "Bella's Pasta",
       contactPerson: "Abel Gebrehiwot",
       contactInfo: "+251 972345683",
@@ -47,7 +47,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 5,
-      logo: "/placeholder.svg?height=40&width=40&text=Ocean",
+      logo: "bella.png?height=40&width=40&text=Ocean",
       name: "Ocean Breeze Smoothies",
       contactPerson: "Hannah Tesfaye",
       contactInfo: "+251 992345684",
@@ -56,7 +56,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 6,
-      logo: "/placeholder.svg?height=40&width=40&text=Vegan",
+      logo: "bella.png?height=40&width=40&text=Vegan",
       name: "The Vegan Corner",
       contactPerson: "Kofi Adomah",
       contactInfo: "+251 912345685",
@@ -65,7 +65,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 7,
-      logo: "/placeholder.svg?height=40&width=40&text=Spice",
+      logo: "bella.png?height=40&width=40&text=Spice",
       name: "Spice Route Cuisine",
       contactPerson: "Sara Mehari",
       contactInfo: "+251 922345686",
@@ -74,7 +74,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 8,
-      logo: "/placeholder.svg?height=40&width=40&text=Farm",
+      logo: "bella.png?height=40&width=40&text=Farm",
       name: "Farm Fresh Organics",
       contactPerson: "Michael Tesfamariam",
       contactInfo: "+251 932345687",
@@ -83,7 +83,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 9,
-      logo: "/placeholder.svg?height=40&width=40&text=Pizzeria",
+      logo: "bella.png?height=40&width=40&text=Pizzeria",
       name: "Pizzeria Amore",
       contactPerson: "Elsa Kebede",
       contactInfo: "+251 942345688",
@@ -92,7 +92,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
     },
     {
       id: 10,
-      logo: "/placeholder.svg?height=40&width=40&text=Sushi",
+      logo: "bella.png?height=40&width=40&text=Sushi",
       name: "Sushi & Sashimi Bar",
       contactPerson: "Biniam Asmerom",
       contactInfo: "+251 92345689",
@@ -108,7 +108,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
   )
 
   return (
-    <div className="p-8 bg-[#f6f7f8] rounded-2xl min-h-screen">
+    <div className="p-8 bg-white rounded-2xl min-h-screen">
       {/* Breadcrumbs (handled by Header.js) */}
 
       {/* Search and Add Merchant */}
@@ -120,7 +120,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
             placeholder="Search Merchants"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+            className="w-full pl-10 pr-4 py-2 border bg-[#f3f4f6] border-gray-100 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
           />
         </div>
         <button

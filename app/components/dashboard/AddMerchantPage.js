@@ -680,7 +680,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
               <button
                 onClick={handleOpenAddCategoryModal}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-green-700 transition-colors"
+                className="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center hover:bg-green-700 transition-colors"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Add New Category
@@ -822,10 +822,10 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   placeholder="Search menu items"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 />
               </div>
-              <div className="flex space-x-3 w-full sm:w-auto">
+              <div className="flex rounded-xl space-x-3 w-full sm:w-auto">
                 <Select
                   value={selectedCategoryFilter}
                   onValueChange={setSelectedCategoryFilter}
@@ -833,7 +833,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   <SelectTrigger className="w-full sm:w-[180px]">
                     <SelectValue placeholder="Filter by Category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     {uniqueCategories.map((cat) => (
                       <SelectItem key={cat} value={cat}>
                         {cat === "all" ? "All Categories" : cat}
@@ -848,7 +848,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   <SelectTrigger className="w-full sm:w-[180px]">
                     <SelectValue placeholder="Filter by Status" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     {uniqueStatuses.map((status) => (
                       <SelectItem key={status} value={status}>
                         {status === "all" ? "All Statuses" : status}
@@ -858,7 +858,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 </Select>
                 <button
                   onClick={handleOpenAddItemModal}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-green-700 transition-colors whitespace-nowrap"
+                  className="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center hover:bg-green-700 transition-colors whitespace-nowrap"
                 >
                   <Plus className="w-5 h-5 mr-2" />
                   Add New Item

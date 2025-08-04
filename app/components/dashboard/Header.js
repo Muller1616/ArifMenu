@@ -44,7 +44,7 @@ export default function Header({ user, setSidebarOpen, onLogout, onShowCustomerA
   }
 
   return (
-    <header className="bg-white">
+    <header className="bg-white m-5 rounded-xl">
       <div className="flex items-center justify-between px-8 py-4">
         <div className="flex items-center">
           <button
