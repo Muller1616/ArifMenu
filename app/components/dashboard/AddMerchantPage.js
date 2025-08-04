@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { useState } from "react";
+import { useState } from "react"
 import {
   ImageIcon,
   MapPin,
@@ -19,26 +19,20 @@ import {
   RefreshCw,
   Download,
   Copy,
-} from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  X,
+  ImagePlus,
+} from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 export default function AddMerchantPage({ onNavigateBack }) {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-  const [editingCategory, setEditingCategory] = useState(null); // State for category being edited
+  const [currentStep, setCurrentStep] = useState(1)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false)
+  const [showDeleteCategoryConfirmModal, setShowDeleteCategoryConfirmModal] = useState(false)
+  const [categoryToDelete, setCategoryToDelete] = useState(null)
+  const [editingCategory, setEditingCategory] = useState(null)
+  const [selectedCategoryPhotoPreview, setSelectedCategoryPhotoPreview] = useState(null) // New state for category photo preview
   const [categories, setCategories] = useState([
     {
       id: 1,
@@ -80,16 +74,14 @@ export default function AddMerchantPage({ onNavigateBack }) {
       addedOn: "Jun 10, 2025",
       status: "Active",
     },
-  ]);
+  ])
 
-  // New state for menu items
   const [menuItems, setMenuItems] = useState([
     {
       id: 1,
       photo: "/placeholder.svg?height=40&width=40",
       name: "Spicy Chai Latte",
-      ingredients:
-        "Spicy Chai Latte: A warm blend of black tea, cinnamon, ginger, and a hint of chili pepper.",
+      ingredients: "Spicy Chai Latte: A warm blend of black tea, cinnamon, ginger, and a hint of chili pepper.",
       category: "Hot Beverages",
       price: "ETB 220.00",
       status: "Unavailable",
@@ -110,8 +102,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
       id: 3,
       photo: "/placeholder.svg?height=40&width=40",
       name: "Ginger Turmeric Tea",
-      ingredients:
-        "Ginger Turmeric Tea: A soothing infusion of ginger, turmeric, and honey, perfect for relaxation.",
+      ingredients: "Ginger Turmeric Tea: A soothing infusion of ginger, turmeric, and honey, perfect for relaxation.",
       category: "Hot Beverages",
       price: "ETB 320.00",
       status: "Available",
@@ -121,8 +112,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
       id: 4,
       photo: "/placeholder.svg?height=40&width=40",
       name: "Vanilla Bean Hot Chocolate",
-      ingredients:
-        "Vanilla Bean Hot Chocolate: Creamy hot chocolate infused with real vanilla bean for a sweet touch.",
+      ingredients: "Vanilla Bean Hot Chocolate: Creamy hot chocolate infused with real vanilla bean for a sweet touch.",
       category: "Hot Beverages",
       price: "ETB 400.00",
       status: "Available",
@@ -132,8 +122,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
       id: 5,
       photo: "/placeholder.svg?height=40&width=40",
       name: "Minty Green Tea",
-      ingredients:
-        "Minty Green Tea: Refreshing green tea with a burst of mint leaves for a cooling effect.",
+      ingredients: "Minty Green Tea: Refreshing green tea with a burst of mint leaves for a cooling effect.",
       category: "Hot Beverages",
       price: "ETB 270.00",
       status: "Available",
@@ -143,8 +132,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
       id: 6,
       photo: "/placeholder.svg?height=40&width=40",
       name: "Caramel Apple Cider",
-      ingredients:
-        "Caramel Apple Cider: Warm apple cider with caramel drizzle and a hint of cinnamon.",
+      ingredients: "Caramel Apple Cider: Warm apple cider with caramel drizzle and a hint of cinnamon.",
       category: "Hot Beverages",
       price: "ETB 260.00",
       status: "Available",
@@ -154,8 +142,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
       id: 7,
       photo: "/placeholder.svg?height=40&width=40",
       name: "Hazelnut Espresso",
-      ingredients:
-        "Hazelnut Espresso: Bold espresso blended with creamy hazelnut syrup for a nutty flavor.",
+      ingredients: "Hazelnut Espresso: Bold espresso blended with creamy hazelnut syrup for a nutty flavor.",
       category: "Hot Beverages",
       price: "ETB 230.00",
       status: "Available",
@@ -165,23 +152,24 @@ export default function AddMerchantPage({ onNavigateBack }) {
       id: 8,
       photo: "/placeholder.svg?height=40&width=40",
       name: "Coconut Cream Hot Cocoa",
-      ingredients:
-        "Coconut Cream Hot Cocoa: Decadent hot cocoa topped with whipped coconut cream.",
+      ingredients: "Coconut Cream Hot Cocoa: Decadent hot cocoa topped with whipped coconut cream.",
       category: "Hot Beverages",
       price: "ETB 280.00",
       status: "Unavailable",
       isSpecial: false,
     },
-  ]);
+  ])
 
-  const [showAddItemModal, setShowAddItemModal] = useState(false);
-  const [editingMenuItem, setEditingMenuItem] = useState(null); // State for menu item being edited
-  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("all");
-  const [selectedStatusFilter, setSelectedStatusFilter] = useState("all");
+  const [showAddItemModal, setShowAddItemModal] = useState(false)
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false)
+  const [itemToDelete, setItemToDelete] = useState(null)
+  const [editingMenuItem, setEditingMenuItem] = useState(null)
+  const [selectedMenuItemPhotoPreview, setSelectedMenuItemPhotoPreview] = useState(null) // New state for menu item photo preview
+  const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("all")
+  const [selectedStatusFilter, setSelectedStatusFilter] = useState("all")
 
-  // States for map coordinates (can be manually entered)
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState("")
+  const [longitude, setLongitude] = useState("")
 
   const steps = [
     { id: 1, name: "Business Details", icon: ImageIcon },
@@ -189,194 +177,197 @@ export default function AddMerchantPage({ onNavigateBack }) {
     { id: 3, name: "Categories", icon: Folder },
     { id: 4, name: "Manage Menu", icon: List },
     { id: 5, name: "QR Codes", icon: QrCode },
-  ];
+  ]
 
   const handleNext = () => {
     if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep(currentStep + 1)
     }
-  };
+  }
 
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      setCurrentStep(currentStep - 1)
     } else {
-      onNavigateBack(); // Go back to Merchants list if on first step
+      onNavigateBack()
     }
-  };
+  }
 
   const handleOpenAddCategoryModal = () => {
-    setEditingCategory(null); // Clear any editing state
-    setShowAddCategoryModal(true);
-  };
+    setEditingCategory(null)
+    setSelectedCategoryPhotoPreview(null) // Clear photo preview for new category
+    setShowAddCategoryModal(true)
+  }
 
   const handleOpenEditCategoryModal = (category) => {
-    setEditingCategory(category);
-    setShowAddCategoryModal(true);
-  };
+    setEditingCategory(category)
+    setSelectedCategoryPhotoPreview(category.photo) // Set current photo as preview for editing
+    setShowAddCategoryModal(true)
+  }
+
+  const handleCategoryPhotoChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      setSelectedCategoryPhotoPreview(URL.createObjectURL(file))
+    } else {
+      setSelectedCategoryPhotoPreview(null)
+    }
+  }
 
   const handleSaveCategory = (categoryData) => {
+    const finalPhoto = selectedCategoryPhotoPreview || "/placeholder.svg?height=40&width=40"
+
     if (editingCategory) {
-      // Update existing category
       setCategories((prevCategories) =>
         prevCategories.map((cat) =>
-          cat.id === editingCategory.id ? { ...cat, ...categoryData } : cat
-        )
-      );
+          cat.id === editingCategory.id ? { ...cat, ...categoryData, photo: finalPhoto } : cat,
+        ),
+      )
     } else {
-      // Add new category
       setCategories((prevCategories) => [
         ...prevCategories,
         {
-          id:
-            prevCategories.length > 0
-              ? Math.max(...prevCategories.map((c) => c.id)) + 1
-              : 1,
+          id: prevCategories.length > 0 ? Math.max(...prevCategories.map((c) => c.id)) + 1 : 1,
           ...categoryData,
-          addedOn: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          }),
+          photo: finalPhoto,
+          addedOn: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
         },
-      ]);
+      ])
     }
-    setShowAddCategoryModal(false);
-    setEditingCategory(null); // Clear editing state
-  };
+    setShowAddCategoryModal(false)
+    setEditingCategory(null)
+    setSelectedCategoryPhotoPreview(null) // Clear preview after saving
+  }
 
   const handleDeleteCategory = (categoryId) => {
-    if (window.confirm("Are you sure you want to delete this category?")) {
-      setCategories((prevCategories) =>
-        prevCategories.filter((cat) => cat.id !== categoryId)
-      );
+    setCategoryToDelete(categoryId)
+    setShowDeleteCategoryConfirmModal(true)
+  }
+
+  const confirmDeleteCategory = () => {
+    if (categoryToDelete) {
+      setCategories((prevCategories) => prevCategories.filter((cat) => cat.id !== categoryToDelete))
+      setCategoryToDelete(null)
+      setShowDeleteCategoryConfirmModal(false)
     }
-  };
+  }
 
   const handleOpenAddItemModal = () => {
-    setEditingMenuItem(null); // Clear any editing state
-    setShowAddItemModal(true);
-  };
+    setEditingMenuItem(null)
+    setSelectedMenuItemPhotoPreview(null) // Clear photo preview for new item
+    setShowAddItemModal(true)
+  }
 
   const handleOpenEditItemModal = (item) => {
-    setEditingMenuItem(item);
-    setShowAddItemModal(true);
-  };
+    setEditingMenuItem(item)
+    setSelectedMenuItemPhotoPreview(item.photo) // Set current photo as preview for editing
+    setShowAddItemModal(true)
+  }
+
+  const handleMenuItemPhotoChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      setSelectedMenuItemPhotoPreview(URL.createObjectURL(file))
+    } else {
+      setSelectedMenuItemPhotoPreview(null)
+    }
+  }
 
   const handleSaveMenuItem = (itemData) => {
+    const finalPhoto = selectedMenuItemPhotoPreview || "/placeholder.svg?height=40&width=40"
+
     if (editingMenuItem) {
-      // Update existing item
       setMenuItems((prevItems) =>
-        prevItems.map((item) =>
-          item.id === editingMenuItem.id ? { ...item, ...itemData } : item
-        )
-      );
+        prevItems.map((item) => (item.id === editingMenuItem.id ? { ...item, ...itemData, photo: finalPhoto } : item)),
+      )
     } else {
-      // Add new item
       setMenuItems((prevItems) => [
         ...prevItems,
         {
-          id:
-            prevItems.length > 0
-              ? Math.max(...prevItems.map((i) => i.id)) + 1
-              : 1,
+          id: prevItems.length > 0 ? Math.max(...prevItems.map((i) => i.id)) + 1 : 1,
           ...itemData,
-          isSpecial: false, // New items are not special by default
+          photo: finalPhoto,
+          isSpecial: false,
         },
-      ]);
+      ])
     }
-    setShowAddItemModal(false);
-    setEditingMenuItem(null); // Clear editing state
-  };
+    setShowAddItemModal(false)
+    setEditingMenuItem(null)
+    setSelectedMenuItemPhotoPreview(null) // Clear preview after saving
+  }
 
   const handleToggleMenuItemStatus = (itemId, newStatus) => {
     setMenuItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId
-          ? { ...item, status: newStatus, isSpecial: false }
-          : item
-      )
-    );
-  };
+      prevItems.map((item) => (item.id === itemId ? { ...item, status: newStatus, isSpecial: false } : item)),
+    )
+  }
 
   const handleToggleMenuItemSpecial = (itemId) => {
     setMenuItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, isSpecial: !item.isSpecial } : item
-      )
-    );
-  };
+      prevItems.map((item) => (item.id === itemId ? { ...item, isSpecial: !item.isSpecial } : item)),
+    )
+  }
 
   const handleDeleteMenuItem = (itemId) => {
-    if (window.confirm("Are you sure you want to delete this menu item?")) {
-      setMenuItems((prevItems) =>
-        prevItems.filter((item) => item.id !== itemId)
-      );
+    setItemToDelete(itemId)
+    setShowDeleteConfirmModal(true)
+  }
+
+  const confirmDeleteItem = () => {
+    if (itemToDelete) {
+      setMenuItems((prevItems) => prevItems.filter((item) => item.id !== itemToDelete))
+      setItemToDelete(null)
+      setShowDeleteConfirmModal(false)
     }
-  };
+  }
 
   const filteredCategories = categories.filter(
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      category.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      category.description.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
 
   const filteredMenuItems = menuItems.filter((item) => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.ingredients.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchTerm.toLowerCase());
+      item.category.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const matchesCategory =
-      selectedCategoryFilter === "all" ||
-      item.category === selectedCategoryFilter;
-    const matchesStatus =
-      selectedStatusFilter === "all" || item.status === selectedStatusFilter;
+    const matchesCategory = selectedCategoryFilter === "all" || item.category === selectedCategoryFilter
+    const matchesStatus = selectedStatusFilter === "all" || item.status === selectedStatusFilter
 
-    return matchesSearch && matchesCategory && matchesStatus;
-  });
+    return matchesSearch && matchesCategory && matchesStatus
+  })
 
-  const uniqueCategories = [
-    "all",
-    ...new Set(menuItems.map((item) => item.category)),
-  ];
-  const uniqueStatuses = [
-    "all",
-    ...new Set(menuItems.map((item) => item.status)),
-  ];
+  const uniqueCategories = ["all", ...new Set(menuItems.map((item) => item.category))]
+  const uniqueStatuses = ["all", ...new Set(menuItems.map((item) => item.status))]
 
-  // Placeholder functions for QR Code actions
   const handleRegenerateQrCode = () => {
-    alert("QR Code Regenerated (placeholder)");
-  };
+    alert("QR Code Regenerated (placeholder)")
+  }
 
   const handleDownloadQrCode = () => {
-    alert("Downloading QR Code (placeholder)");
-  };
+    alert("Downloading QR Code (placeholder)")
+  }
 
   const handleCopyUrl = () => {
-    navigator.clipboard.writeText("https://www.arifmenu.com/foodzone");
-    alert("URL copied to clipboard!");
-  };
+    navigator.clipboard.writeText("https://www.arifmenu.com/foodzone")
+    alert("URL copied to clipboard!")
+  }
 
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
         return (
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
-            <h2 className="text-lg font-semibold text-gray-800 mb-6">
-              Basic business information form
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-6">Basic business information form</h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Logo Upload */}
               <div className="lg:col-span-1 flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-200 rounded-lg bg-gray-50">
                 <ImageIcon className="w-12 h-12 text-gray-400 mb-3" />
                 <p className="text-sm text-gray-600 text-center">
-                  Drop logo here or{" "}
-                  <span className="text-green-600 font-medium cursor-pointer">
-                    browse
-                  </span>
+                  Drop logo here or <span className="text-green-600 font-medium cursor-pointer">browse</span>
                 </p>
                 <p className="text-xs text-gray-400 mt-1">Maximum size: 5MB</p>
               </div>
@@ -384,10 +375,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
               {/* Business Name & Brand Name */}
               <div className="lg:col-span-2 space-y-4">
                 <div>
-                  <label
-                    htmlFor="businessName"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
+                  <label htmlFor="businessName" className="block text-sm font-medium text-gray-700 mb-2">
                     Business Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -399,10 +387,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="brandName"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
+                  <label htmlFor="brandName" className="block text-sm font-medium text-gray-700 mb-2">
                     Brand/Display Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -419,10 +404,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
             {/* Other Details */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
               <div>
-                <label
-                  htmlFor="tradeLicense"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="tradeLicense" className="block text-sm font-medium text-gray-700 mb-2">
                   Trade License Number <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -434,12 +416,8 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="tinVat"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  TIN / VAT Registration Number{" "}
-                  <span className="text-red-500">*</span>
+                <label htmlFor="tinVat" className="block text-sm font-medium text-gray-700 mb-2">
+                  TIN / VAT Registration Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -450,10 +428,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="merchantId"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="merchantId" className="block text-sm font-medium text-gray-700 mb-2">
                   Merchant ID <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -468,10 +443,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
 
             {/* Short Business Description */}
             <div className="mt-6">
-              <label
-                htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                 Short Business Description
               </label>
               <textarea
@@ -482,20 +454,15 @@ export default function AddMerchantPage({ onNavigateBack }) {
               ></textarea>
             </div>
           </div>
-        );
+        )
       case 2:
         return (
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
-            <h2 className="text-lg font-semibold text-gray-800 mb-6">
-              Business location address and contact
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-6">Business location address and contact</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div>
-                <label
-                  htmlFor="fullName"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
                   Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -507,10 +474,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="mobilePhone"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="mobilePhone" className="block text-sm font-medium text-gray-700 mb-2">
                   Mobile Phone <span className="text-red-500">*</span>
                 </label>
                 <div className="flex">
@@ -534,10 +498,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 </div>
               </div>
               <div>
-                <label
-                  htmlFor="emailAddress"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="emailAddress" className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -550,16 +511,11 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
             </div>
 
-            <h2 className="text-lg font-semibold text-gray-800 mb-6">
-              Primary contact person Information
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-6">Primary contact person Information</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <div>
-                <label
-                  htmlFor="regionState"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="regionState" className="block text-sm font-medium text-gray-700 mb-2">
                   Region / State <span className="text-red-500">*</span>
                 </label>
                 <Select>
@@ -574,10 +530,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 </Select>
               </div>
               <div>
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
                   City <span className="text-red-500">*</span>
                 </label>
                 <Select>
@@ -591,10 +544,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 </Select>
               </div>
               <div>
-                <label
-                  htmlFor="subCityWoreda"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="subCityWoreda" className="block text-sm font-medium text-gray-700 mb-2">
                   Sub-City / Woreda <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -607,9 +557,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
             </div>
 
-            <h2 className="text-lg font-semibold text-gray-800 mb-6">
-              Pick business location from map
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-6">Pick business location from map</h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="h-64 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center relative">
@@ -627,10 +575,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
               <div className="space-y-4">
                 <div>
-                  <label
-                    htmlFor="latitude"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
+                  <label htmlFor="latitude" className="block text-sm font-medium text-gray-700 mb-2">
                     Latitude <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -644,10 +589,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="longitude"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
+                  <label htmlFor="longitude" className="block text-sm font-medium text-gray-700 mb-2">
                     Longitude <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -663,7 +605,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
             </div>
           </div>
-        );
+        )
       case 3:
         return (
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
@@ -680,7 +622,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
               <button
                 onClick={handleOpenAddCategoryModal}
-                className="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center hover:bg-green-700 transition-colors"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-green-700 transition-colors"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Add New Category
@@ -693,35 +635,25 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 <table className="min-w-full divide-y divide-gray-100">
                   <thead className="bg-[#eff0f6]">
                     <tr>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        #
+                      <th className="px-6 py-4 text-left">
+                        <input
+                          type="checkbox"
+                          className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                        />
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Photo
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Category Name
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Description
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Added on
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Status
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Actions
-                      </th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">#</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Photo</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Category Name</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Description</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Added on</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Status</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-100">
                     {filteredCategories.map((category) => (
                       <tr key={category.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 text-sm text-gray-900">
-                          {category.id}
-                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-900">{category.id}</td>
                         <td className="px-6 py-4">
                           <img
                             src={category.photo || "/placeholder.svg"}
@@ -729,21 +661,13 @@ export default function AddMerchantPage({ onNavigateBack }) {
                             className="w-10 h-10 rounded-lg object-cover"
                           />
                         </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                          {category.name}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-600">
-                          {category.description}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-600">
-                          {category.addedOn}
-                        </td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">{category.name}</td>
+                        <td className="px-6 py-4 text-sm text-gray-600">{category.description}</td>
+                        <td className="px-6 py-4 text-sm text-gray-600">{category.addedOn}</td>
                         <td className="px-6 py-4">
                           <span
                             className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${
-                              category.status === "Active"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
+                              category.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
                             }`}
                           >
                             {category.status}
@@ -756,21 +680,17 @@ export default function AddMerchantPage({ onNavigateBack }) {
                                 <MoreVertical className="w-5 h-5" />
                               </button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-10 bg-white">
+                            <DropdownMenuContent align="end" className="w-40">
                               <DropdownMenuItem
                                 className="flex items-center cursor-pointer"
-                                onClick={() =>
-                                  handleOpenEditCategoryModal(category)
-                                }
+                                onClick={() => handleOpenEditCategoryModal(category)}
                               >
                                 <Edit className="mr-2 h-4 w-4" />
                                 <span>Edit</span>
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 className="flex items-center text-red-600 cursor-pointer"
-                                onClick={() =>
-                                  handleDeleteCategory(category.id)
-                                }
+                                onClick={() => handleDeleteCategory(category.id)}
                               >
                                 <Trash2 className="mr-2 h-4 w-4" />
                                 <span>Remove</span>
@@ -786,31 +706,19 @@ export default function AddMerchantPage({ onNavigateBack }) {
 
               {/* Pagination */}
               <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
-                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                  « Previous
-                </button>
+                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">« Previous</button>
                 <div className="flex items-center space-x-1">
-                  <button className="px-3 py-1 text-sm font-medium bg-green-600 text-white rounded-md">
-                    1
-                  </button>
-                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                    2
-                  </button>
-                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                    3
-                  </button>
+                  <button className="px-3 py-1 text-sm font-medium bg-green-600 text-white rounded-md">1</button>
+                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">2</button>
+                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">3</button>
                   <span className="text-sm text-gray-500">...</span>
-                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                    10
-                  </button>
+                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">10</button>
                 </div>
-                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                  Next »
-                </button>
+                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">Next »</button>
               </div>
             </div>
           </div>
-        );
+        )
       case 4:
         return (
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
@@ -822,18 +730,15 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   placeholder="Search menu items"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
                 />
               </div>
-              <div className="flex rounded-xl space-x-3 w-full sm:w-auto">
-                <Select
-                  value={selectedCategoryFilter}
-                  onValueChange={setSelectedCategoryFilter}
-                >
+              <div className="flex space-x-3 w-full sm:w-auto">
+                <Select value={selectedCategoryFilter} onValueChange={setSelectedCategoryFilter}>
                   <SelectTrigger className="w-full sm:w-[180px]">
                     <SelectValue placeholder="Filter by Category" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white">
+                  <SelectContent>
                     {uniqueCategories.map((cat) => (
                       <SelectItem key={cat} value={cat}>
                         {cat === "all" ? "All Categories" : cat}
@@ -841,14 +746,11 @@ export default function AddMerchantPage({ onNavigateBack }) {
                     ))}
                   </SelectContent>
                 </Select>
-                <Select
-                  value={selectedStatusFilter}
-                  onValueChange={setSelectedStatusFilter}
-                >
+                <Select value={selectedStatusFilter} onValueChange={setSelectedStatusFilter}>
                   <SelectTrigger className="w-full sm:w-[180px]">
                     <SelectValue placeholder="Filter by Status" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white">
+                  <SelectContent>
                     {uniqueStatuses.map((status) => (
                       <SelectItem key={status} value={status}>
                         {status === "all" ? "All Statuses" : status}
@@ -858,7 +760,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 </Select>
                 <button
                   onClick={handleOpenAddItemModal}
-                  className="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center hover:bg-green-700 transition-colors whitespace-nowrap"
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-green-700 transition-colors whitespace-nowrap"
                 >
                   <Plus className="w-5 h-5 mr-2" />
                   Add New Item
@@ -878,30 +780,14 @@ export default function AddMerchantPage({ onNavigateBack }) {
                           className="rounded border-gray-300 text-green-600 focus:ring-green-500"
                         />
                       </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        #
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Photo
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Item Name
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Ingredients
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Category
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Price
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Status
-                      </th>
-                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
-                        Actions
-                      </th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">#</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Photo</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Item Name</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Ingredients</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Category</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Price</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Status</th>
+                      <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-100">
@@ -913,9 +799,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                             className="rounded border-gray-300 text-green-600 focus:ring-green-500"
                           />
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-900">
-                          {item.id}
-                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-900">{item.id}</td>
                         <td className="px-6 py-4">
                           <img
                             src={item.photo || "/placeholder.svg"}
@@ -923,25 +807,17 @@ export default function AddMerchantPage({ onNavigateBack }) {
                             className="w-10 h-10 rounded-lg object-cover"
                           />
                         </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                          {item.name}
-                        </td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">{item.name}</td>
                         <td className="px-6 py-4 text-sm text-gray-600 max-w-xs overflow-hidden text-ellipsis whitespace-nowrap">
                           {item.ingredients}
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-600">
-                          {item.category}
-                        </td>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                          {item.price}
-                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-600">{item.category}</td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">{item.price}</td>
                         <td className="px-6 py-4">
                           <div className="flex flex-col space-y-1">
                             <span
                               className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${
-                                item.status === "Available"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-red-110 text-red-800"
+                                item.status === "Available" ? "bg-green-100 text-green-800" : "bg-red-110 text-red-800"
                               }`}
                             >
                               {item.status}
@@ -960,7 +836,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                                 <MoreVertical className="w-5 h-5" />
                               </button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56 bg-white">
+                            <DropdownMenuContent align="end" className="w-56">
                               <DropdownMenuItem
                                 className="flex items-center cursor-pointer"
                                 onClick={() => handleOpenEditItemModal(item)}
@@ -970,34 +846,22 @@ export default function AddMerchantPage({ onNavigateBack }) {
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 className="flex items-center cursor-pointer"
-                                onClick={() =>
-                                  handleToggleMenuItemSpecial(item.id)
-                                }
+                                onClick={() => handleToggleMenuItemSpecial(item.id)}
                               >
                                 <Sparkles className="mr-2 h-4 w-4" />
-                                <span>
-                                  {item.isSpecial
-                                    ? "Remove from Special"
-                                    : "Mark as Special"}
-                                </span>
+                                <span>{item.isSpecial ? "Remove from Special" : "Mark as Special"}</span>
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 className="flex items-center cursor-pointer"
                                 onClick={() =>
                                   handleToggleMenuItemStatus(
                                     item.id,
-                                    item.status === "Available"
-                                      ? "Unavailable"
-                                      : "Available"
+                                    item.status === "Available" ? "Unavailable" : "Available",
                                   )
                                 }
                               >
                                 <EyeOff className="mr-2 h-4 w-4" />
-                                <span>
-                                  {item.status === "Available"
-                                    ? "Mark as Unavailable"
-                                    : "Mark as Available"}
-                                </span>
+                                <span>{item.status === "Available" ? "Mark as Unavailable" : "Mark as Available"}</span>
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 className="flex items-center text-red-600 cursor-pointer"
@@ -1017,42 +881,28 @@ export default function AddMerchantPage({ onNavigateBack }) {
 
               {/* Pagination */}
               <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
-                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                  « Previous
-                </button>
+                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">« Previous</button>
                 <div className="flex items-center space-x-1">
-                  <button className="px-3 py-1 text-sm font-medium bg-green-600 text-white rounded-md">
-                    1
-                  </button>
-                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                    2
-                  </button>
-                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                    3
-                  </button>
+                  <button className="px-3 py-1 text-sm font-medium bg-green-600 text-white rounded-md">1</button>
+                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">2</button>
+                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">3</button>
                   <span className="text-sm text-gray-500">...</span>
-                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                    10
-                  </button>
+                  <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">10</button>
                 </div>
-                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
-                  Next »
-                </button>
+                <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">Next »</button>
               </div>
             </div>
           </div>
-        );
+        )
       case 5:
         return (
           <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
-            {/* <h2 className="text-lg font-semibold text-gray-800 mb-6">
-              QR Codes Generation
-            </h2> */}
+            <h2 className="text-lg font-semibold text-gray-800 mb-6">QR Codes Generation</h2>
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
               {/* QR Code Display */}
               <div className="w-48 h-48 md:w-64 md:h-64 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                 <img
-                  src="QRCODE.png?height=337&width=319&text=QR+Code"
+                  src="/placeholder.svg?height=256&width=256&text=QR+Code"
                   alt="QR Code"
                   className="w-full h-full object-contain p-4"
                 />
@@ -1060,22 +910,14 @@ export default function AddMerchantPage({ onNavigateBack }) {
 
               {/* QR Code Details and Actions */}
               <div className="flex-1 space-y-4 text-center md:text-left">
-                <h3 className="text-xl font-bold text-gray-900">
-                  Foodzone Menu
-                </h3>
+                <h3 className="text-xl font-bold text-gray-900">Foodzone Menu</h3>
                 <p className="text-gray-600 text-sm">
-                  Ensure that you test the QR code before finalizing the print
-                  for the client. Also, make sure the downloaded file is named
-                  after the merchant.
+                  Ensure that you test the QR code before finalizing the print for the client. Also, make sure the
+                  downloaded file is named after the merchant.
                 </p>
                 <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 text-gray-700 text-sm">
-                  <span className="truncate">
-                    https://www.arifmenu.com/foodzone
-                  </span>
-                  <button
-                    onClick={handleCopyUrl}
-                    className="ml-auto p-1 rounded-md hover:bg-gray-100"
-                  >
+                  <span className="truncate">https://www.arifmenu.com/foodzone</span>
+                  <button onClick={handleCopyUrl} className="ml-auto p-1 rounded-md hover:bg-gray-100">
                     <Copy className="w-4 h-4 text-gray-500" />
                   </button>
                 </div>
@@ -1098,11 +940,11 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
             </div>
           </div>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <div className="p-8 bg-[#f6f7f8] rounded-2xl min-h-screen">
@@ -1113,9 +955,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
             <button
               onClick={() => setCurrentStep(step.id)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
-                currentStep === step.id
-                  ? "bg-gray-100 text-gray-800"
-                  : "hover:bg-gray-50"
+                currentStep === step.id ? "bg-gray-100 text-gray-800" : "hover:bg-gray-50"
               }`}
             >
               <step.icon className="w-5 h-5" />
@@ -1141,9 +981,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
           {steps.map((_, index) => (
             <div
               key={index}
-              className={`w-2 h-2 rounded-full ${
-                index + 1 === currentStep ? "bg-green-600" : "bg-gray-300"
-              }`}
+              className={`w-2 h-2 rounded-full ${index + 1 === currentStep ? "bg-green-600" : "bg-gray-300"}`}
             ></div>
           ))}
         </div>
@@ -1166,77 +1004,56 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </h2>
               <button
                 onClick={() => {
-                  setShowAddCategoryModal(false);
-                  setEditingCategory(null); // Clear editing state on close
+                  setShowAddCategoryModal(false)
+                  setEditingCategory(null)
+                  setSelectedCategoryPhotoPreview(null) // Clear preview on close
                 }}
                 className="text-gray-500 hover:text-gray-700"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
             <form
               onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
+                e.preventDefault()
+                const formData = new FormData(e.target)
                 handleSaveCategory({
                   name: formData.get("categoryName"),
                   description: formData.get("description"),
                   status: formData.get("status"),
-                  photo:
-                    editingCategory?.photo ||
-                    "/placeholder.svg?height=40&width=40", // Keep existing photo or use placeholder
-                });
+                })
               }}
               className="space-y-4"
             >
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Category Name
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Category Name</label>
                 <input
                   type="text"
                   name="categoryName"
-                  defaultValue={editingCategory?.name || ""} // Pre-fill for editing
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  defaultValue={editingCategory?.name || ""}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                   placeholder="Enter category name"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
                 <textarea
                   name="description"
-                  defaultValue={editingCategory?.description || ""} // Pre-fill for editing
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  defaultValue={editingCategory?.description || ""}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                   rows="3"
                   placeholder="Enter category description"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Status
-                </label>
-                <Select
-                  name="status"
-                  defaultValue={editingCategory?.status || "Active"}
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <Select name="status" defaultValue={editingCategory?.status || "Active"}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
@@ -1248,25 +1065,33 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Photo
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Photo</label>
                 <input
                   type="file"
                   name="photo"
+                  onChange={handleCategoryPhotoChange}
                   className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                 />
-                <p className="mt-1 text-xs text-gray-500">
-                  Leave blank to use a default placeholder image.
-                </p>
+                <p className="mt-1 text-xs text-gray-500">Leave blank to use a default placeholder image.</p>
+                {selectedCategoryPhotoPreview && (
+                  <div className="mt-4">
+                    <img
+                      src={selectedCategoryPhotoPreview || "/placeholder.svg"}
+                      alt="Category Preview"
+                      className="w-24 h-24 object-cover rounded-lg mx-auto"
+                    />
+                    <p className="text-center text-xs text-gray-500 mt-1">Image Preview</p>
+                  </div>
+                )}
               </div>
 
               <div className="flex space-x-3 pt-4">
                 <button
                   type="button"
                   onClick={() => {
-                    setShowAddCategoryModal(false);
-                    setEditingCategory(null);
+                    setShowAddCategoryModal(false)
+                    setEditingCategory(null)
+                    setSelectedCategoryPhotoPreview(null)
                   }}
                   className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
                 >
@@ -1287,121 +1112,141 @@ export default function AddMerchantPage({ onNavigateBack }) {
       {/* Add/Edit Menu Item Modal */}
       {showAddItemModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <div className="bg-white rounded-2xl max-w-3xl w-full p-6">
+            {" "}
+            {/* Changed max-w-2xl to max-w-3xl for wider modal */}
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">
-                {editingMenuItem ? "Edit Menu Item" : "Add New Menu Item"}
-              </h2>
+              <h2 className="text-xl font-bold text-gray-900">{editingMenuItem ? "Edit Menu Item" : "Add New Item"}</h2>
               <button
                 onClick={() => {
-                  setShowAddItemModal(false);
-                  setEditingMenuItem(null); // Clear editing state on close
+                  setShowAddItemModal(false)
+                  setEditingMenuItem(null)
+                  setSelectedMenuItemPhotoPreview(null) // Clear preview on close
                 }}
-                className="text-gray-500 hover:text-gray-700"
+                className="bg-red-100 text-red-600 rounded-full p-1.5 hover:bg-red-200"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <X className="w-4 h-4" />
               </button>
             </div>
-
             <form
               onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
+                e.preventDefault()
+                const formData = new FormData(e.target)
                 handleSaveMenuItem({
                   name: formData.get("itemName"),
                   ingredients: formData.get("ingredients"),
                   category: formData.get("itemCategory"),
                   price: formData.get("itemPrice"),
                   status: formData.get("itemStatus"),
-                  photo:
-                    editingMenuItem?.photo ||
-                    "/placeholder.svg?height=40&width=40", // Keep existing photo or use placeholder
-                });
+                })
               }}
               className="space-y-4"
             >
+              {/* Photo Upload Area */}
+              <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-200 rounded-lg bg-gray-50 relative cursor-pointer overflow-hidden">
+                <input
+                  type="file"
+                  name="photo"
+                  onChange={handleMenuItemPhotoChange}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" // Added z-10 to ensure input is clickable
+                  aria-label="Upload menu item photo"
+                />
+                {selectedMenuItemPhotoPreview ? (
+                  <img
+                    src={selectedMenuItemPhotoPreview || "/placeholder.svg"}
+                    alt="Menu Item Preview"
+                    className="absolute inset-0 w-12  h-full object-cover" // Image covers the entire area
+                  />
+                ) : (
+                  <>
+                    <ImagePlus className="w-12 h-12 text-gray-400 mb-3" />
+                    <p className="text-sm text-gray-600 text-center">
+                      Drop logo here or <span className="text-green-600 font-medium cursor-pointer">browse</span>
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">Maximum size: 5MB</p>
+                  </>
+                )}
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Item Name
+                  Item Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   name="itemName"
                   defaultValue={editingMenuItem?.name || ""}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                   placeholder="Enter item name"
                   required
                 />
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {" "}
+                {/* Grid for horizontal layout */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Category <span className="text-red-500">*</span>
+                  </label>
+                  <Select name="itemCategory" defaultValue={editingMenuItem?.category || ""}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select item category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat.id} value={cat.name}>
+                          {cat.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Price <span className="text-red-500">*</span>
+                  </label>
+                  <div className="flex space-x-2">
+                    <Select name="currency" defaultValue="ETB">
+                      <SelectTrigger className="w-24">
+                        <SelectValue placeholder="Currency" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ETB">ETB</SelectItem>
+                        <SelectItem value="USD">USD</SelectItem>
+                        <SelectItem value="EUR">EUR</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <input
+                      type="text"
+                      name="itemPrice"
+                      defaultValue={editingMenuItem?.price.replace("ETB ", "") || ""} // Adjust default value to remove "ETB "
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder="Enter item price"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ingredients
+                  Ingredients <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   name="ingredients"
                   defaultValue={editingMenuItem?.ingredients || ""}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                   rows="3"
-                  placeholder="List ingredients"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Category
-                </label>
-                <Select
-                  name="itemCategory"
-                  defaultValue={editingMenuItem?.category || ""}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.name}>
-                        {cat.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Price
-                </label>
-                <input
-                  type="text"
-                  name="itemPrice"
-                  defaultValue={editingMenuItem?.price || ""}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
-                  placeholder="e.g., ETB 250.00"
+                  placeholder="Write item ingredients"
                   required
                 />
               </div>
 
+              {/* Status field is now after Ingredients */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Status
-                </label>
-                <Select
-                  name="itemStatus"
-                  defaultValue={editingMenuItem?.status || "Available"}
-                >
+                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <Select name="itemStatus" defaultValue={editingMenuItem?.status || "Available"}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
@@ -1412,42 +1257,147 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 </Select>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Photo
-                </label>
-                <input
-                  type="file"
-                  name="photo"
-                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
-                />
-                <p className="mt-1 text-xs text-gray-500">
-                  Leave blank to use a default placeholder image.
-                </p>
-              </div>
-
-              <div className="flex space-x-3 pt-4">
+              <div className="flex justify-end space-x-3 pt-4">
                 <button
                   type="button"
                   onClick={() => {
-                    setShowAddItemModal(false);
-                    setEditingMenuItem(null);
+                    setShowAddItemModal(false)
+                    setEditingMenuItem(null)
+                    setSelectedMenuItemPhotoPreview(null)
                   }}
-                  className="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+                  className="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
+                  className="flex-1 bg-[#3CA32B] text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
                 >
-                  {editingMenuItem ? "Save Changes" : "Add Item"}
+                  {editingMenuItem ? "Save Changes" : "Add Item to menu"}
                 </button>
               </div>
             </form>
           </div>
         </div>
       )}
+      {showDeleteConfirmModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-gray-900">Delete Menu Item</h2>
+              <button
+                onClick={() => {
+                  setShowDeleteConfirmModal(false)
+                  setItemToDelete(null)
+                }}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg flex items-start space-x-3 mb-6">
+              <svg className="w-6 h-6 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+              <div>
+                <p className="font-bold mb-1">Are you sure you want to delete an item from menu?</p>
+                <p className="text-sm">
+                  Are you certain you wish to remove this item from the menu? Please be aware that this action will
+                  permanently delete the selected item.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowDeleteConfirmModal(false)
+                  setItemToDelete(null)
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeleteItem}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Delete Menu Item
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Category Confirmation Modal */}
+      {showDeleteCategoryConfirmModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-gray-900">Delete Category</h2>
+              <button
+                onClick={() => {
+                  setShowDeleteCategoryConfirmModal(false)
+                  setCategoryToDelete(null)
+                }}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg flex items-start space-x-3 mb-6">
+              <svg className="w-6 h-6 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+              <div>
+                <p className="font-bold mb-1">Are you sure you want to delete this category?</p>
+                <p className="text-sm">
+                  Are you certain you wish to remove this category from the menu? Please be aware that this action will
+                  affect menu items in the menu sections.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex justify-end space-x-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowDeleteCategoryConfirmModal(false)
+                  setCategoryToDelete(null)
+                }}
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeleteCategory}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              >
+                Delete Category
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  );
+  )
 }
