@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
 
-export default function Header({ user, setSidebarOpen, onLogout, onShowCustomerApp, currentPage, setCurrentPage }) {
+export default function Header({ user, setSidebarOpen, onLogout, currentPage, setCurrentPage }) {
   // Added currentPage prop
   const [showUserMenu, setShowUserMenu] = useState(false)
 
@@ -105,12 +105,6 @@ export default function Header({ user, setSidebarOpen, onLogout, onShowCustomerA
                   <p className="text-xs text-gray-500">Super Admin</p>
                 </div>
                 <div className="py-1">
-                  <button
-                    onClick={onShowCustomerApp}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    View Customer App
-                  </button>
                   <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                     Profile Settings
                   </button>

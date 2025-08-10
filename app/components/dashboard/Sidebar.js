@@ -8,14 +8,14 @@ export default function Sidebar({
 }) {
   // UPDATED: Exact menu items from the screenshot
   const menuItems = [
-    { id: "dashboard", name: "Dashboard", icon: " "},
-    { id: "merchants", name: "Merchants", icon: "" },
-    { id: "meta-data", name: "Meta Data", icon: "" },
-    { id: "configurations", name: "Configurations", icon: "" },
-    { id: "report", name: "Report", icon: "" },
-    { id: "users", name: "Users", icon: "" },
-    { id: "roles", name: "Roles", icon: "" },
-    { id: "permissions", name: "Permissions", icon: "" },
+    { id: "dashboard", name: "Dashboard", icon: "🎁"},
+    { id: "merchants", name: "Merchants", icon: "🎁" },
+    { id: "meta-data", name: "Meta Data", icon: "🎁" },
+    { id: "configurations", name: "Configurations", icon: "🎁" },
+    { id: "report", name: "Report", icon: "🎁" },
+    { id: "users", name: "Users", icon: "🎁" },
+    { id: "roles", name: "Roles", icon: "🎁" },
+    { id: "permissions", name: "Permissions", icon: "🎁" },
   ];
 
   return (
