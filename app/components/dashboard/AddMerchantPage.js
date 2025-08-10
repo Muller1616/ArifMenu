@@ -997,7 +997,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
       {/* Add/Edit Category Modal */}
       {showAddCategoryModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <div className="bg-white rounded-lg max-w-3xl w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-gray-900">
                 {editingCategory ? "Edit Category" : "Add New Category"}
@@ -1008,11 +1008,9 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   setEditingCategory(null)
                   setSelectedCategoryPhotoPreview(null) // Clear preview on close
                 }}
-                className="text-gray-500 hover:text-gray-700"
+                className="bg-red-100 text-red-600 rounded-full p-1.5 hover:bg-red-200"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X className="w-4 h-4" />
               </button>
             </div>
 
@@ -1041,48 +1039,44 @@ export default function AddMerchantPage({ onNavigateBack }) {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Category Description <span className="text-red-500">*</span>
+                </label>
                 <textarea
                   name="description"
                   defaultValue={editingCategory?.description || ""}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                   rows="3"
-                  placeholder="Enter category description"
+                  placeholder="Write category description..."
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                <Select name="status" defaultValue={editingCategory?.status || "Active"}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Active">Active</SelectItem>
-                    <SelectItem value="Inactive">Inactive</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Photo</label>
-                <input
-                  type="file"
-                  name="photo"
-                  onChange={handleCategoryPhotoChange}
-                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
-                />
-                <p className="mt-1 text-xs text-gray-500">Leave blank to use a default placeholder image.</p>
-                {selectedCategoryPhotoPreview && (
-                  <div className="mt-4">
+                <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-200 rounded-lg bg-gray-50 relative cursor-pointer overflow-hidden">
+                  <input
+                    type="file"
+                    name="photo"
+                    onChange={handleCategoryPhotoChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                    aria-label="Upload category photo"
+                  />
+                  {selectedCategoryPhotoPreview ? (
                     <img
                       src={selectedCategoryPhotoPreview || "/placeholder.svg"}
                       alt="Category Preview"
-                      className="w-24 h-24 object-cover rounded-lg mx-auto"
+                      className="absolute inset-0 w-full h-full object-cover object-center"
                     />
-                    <p className="text-center text-xs text-gray-500 mt-1">Image Preview</p>
-                  </div>
-                )}
+                  ) : (
+                    <>
+                      <ImagePlus className="w-12 h-12 text-gray-400 mb-3" />
+                      <p className="text-sm text-gray-600 text-center">
+                        Drop logo here or <span className="text-green-600 font-medium cursor-pointer">browse</span>
+                      </p>
+                      <p className="text-xs text-gray-400 mt-1">Maximum size: 5MB</p>
+                    </>
+                  )}
+                </div>
               </div>
 
               <div className="flex space-x-3 pt-4">
@@ -1155,7 +1149,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                   <img
                     src={selectedMenuItemPhotoPreview || "/placeholder.svg"}
                     alt="Menu Item Preview"
-                    className="absolute inset-0 w-12  h-full object-cover" // Image covers the entire area
+                    className="absolute inset-0 w-full h-full object-cover object-center" // Added object-center
                   />
                 ) : (
                   <>
@@ -1243,7 +1237,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
                 />
               </div>
 
-              {/* Status field is now after Ingredients */}
+              {/* Status field is now after Ingredients, as per screenshot */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
                 <Select name="itemStatus" defaultValue={editingMenuItem?.status || "Available"}>
