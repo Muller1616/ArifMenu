@@ -1,17 +1,37 @@
-"use client"
+"use client";
 
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
-import { useState } from "react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreVertical, Search, Plus, Edit, UserX, Trash2, X } from "lucide-react"
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  MoreVertical,
+  Search,
+  Plus,
+  Edit,
+  UserX,
+  Trash2,
+  X,
+} from "lucide-react";
 
 export default function UserManagement() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [showAddUserModal, setShowAddUserModal] = useState(false)
-  const [showEditUserModal, setShowEditUserModal] = useState(false)
-  const [editingUser, setEditingUser] = useState(null)
-  const [showDeleteUserConfirmModal, setShowDeleteUserConfirmModal] = useState(false)
-  const [userToDelete, setUserToDelete] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [showEditUserModal, setShowEditUserModal] = useState(false);
+  const [editingUser, setEditingUser] = useState(null);
+  const [showDeleteUserConfirmModal, setShowDeleteUserConfirmModal] =
+    useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   const [users, setUsers] = useState([
     {
@@ -114,62 +134,80 @@ export default function UserManagement() {
       email: "biniam@example.com",
       remark: "Admin staff",
     },
-  ])
- const filteredUsers = users.filter(
+  ]);
+  const filteredUsers = users.filter(
     (user) =>
       user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.phone.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+      user.phone.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleOpenAddUserModal = () => {
-    setEditingUser(null)
-    setShowAddUserModal(true)
-  }
+    setEditingUser(null);
+    setShowAddUserModal(true);
+  };
 
   const handleOpenEditUserModal = (user) => {
-    setEditingUser(user)
-    setShowEditUserModal(true)
-  }
+    setEditingUser(user);
+    setShowEditUserModal(true);
+  };
 
   const handleSaveUser = (userData) => {
     if (editingUser) {
-      setUsers((prevUsers) => prevUsers.map((user) => (user.id === editingUser.id ? { ...user, ...userData } : user)))
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === editingUser.id ? { ...user, ...userData } : user
+        )
+      );
     } else {
       setUsers((prevUsers) => [
         ...prevUsers,
         {
-          id: prevUsers.length > 0 ? Math.max(...prevUsers.map((u) => u.id)) + 1 : 1,
+          id:
+            prevUsers.length > 0
+              ? Math.max(...prevUsers.map((u) => u.id)) + 1
+              : 1,
           ...userData,
-          addedOn: new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }),
+          addedOn: new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          }),
         },
-      ])
+      ]);
     }
-    setShowAddUserModal(false)
-    setShowEditUserModal(false)
-    setEditingUser(null)
-  }
+    setShowAddUserModal(false);
+    setShowEditUserModal(false);
+    setEditingUser(null);
+  };
 
   const handleToggleUserStatus = (userId) => {
     setUsers((prevUsers) =>
       prevUsers.map((user) =>
-        user.id === userId ? { ...user, status: user.status === "Active" ? "Inactive" : "Active" } : user,
-      ),
-    )
-  }
+        user.id === userId
+          ? {
+              ...user,
+              status: user.status === "Active" ? "Inactive" : "Active",
+            }
+          : user
+      )
+    );
+  };
 
   const handleDeleteUser = (userId) => {
-    setUserToDelete(userId)
-    setShowDeleteUserConfirmModal(true)
-  }
+    setUserToDelete(userId);
+    setShowDeleteUserConfirmModal(true);
+  };
 
   const confirmDeleteUser = () => {
     if (userToDelete) {
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userToDelete))
-      setUserToDelete(null)
-      setShowDeleteUserConfirmModal(false)
+      setUsers((prevUsers) =>
+        prevUsers.filter((user) => user.id !== userToDelete)
+      );
+      setUserToDelete(null);
+      setShowDeleteUserConfirmModal(false);
     }
-  }
+  };
 
   return (
     <div className="p-8 bg-[#f6f7f8] rounded-2xl min-h-screen">
@@ -199,31 +237,58 @@ export default function UserManagement() {
           <table className="min-w-full divide-y divide-gray-100">
             <thead className="bg-[#eff0f6]">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">#</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">User Full Name</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Role</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Phone Number</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Added on</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Actions</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
+                  #
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
+                  User Full Name
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
+                  Role
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
+                  Phone Number
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
+                  Added on
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
+                  Status
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100">
               {filteredUsers.map(
                 (
                   user,
-                  index, // Use index here
+                  index // Use index here
                 ) => (
                   <tr key={user.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm text-gray-900">{index + 1}</td> {/* Display index + 1 */}
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{user.fullName}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{user.role}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{user.phone}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{user.addedOn}</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">
+                      {index + 1}
+                    </td>{" "}
+                    {/* Display index + 1 */}
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
+                      {user.fullName}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {user.role}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {user.phone}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {user.addedOn}
+                    </td>
                     <td className="px-6 py-4">
                       <span
                         className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${
-                          user.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                          user.status === "Active"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
                         }`}
                       >
                         {user.status}
@@ -249,7 +314,11 @@ export default function UserManagement() {
                             onClick={() => handleToggleUserStatus(user.id)}
                           >
                             <UserX className="mr-2 h-4 w-4" />
-                            <span>{user.status === "Active" ? "Mark as Inactive" : "Mark as Active"}</span>
+                            <span>
+                              {user.status === "Active"
+                                ? "Mark as Inactive"
+                                : "Mark as Active"}
+                            </span>
                           </DropdownMenuItem>
                           <DropdownMenuItem
                             className="flex items-center text-red-600 cursor-pointer"
@@ -262,7 +331,7 @@ export default function UserManagement() {
                       </DropdownMenu>
                     </td>
                   </tr>
-                ),
+                )
               )}
             </tbody>
           </table>
@@ -270,15 +339,27 @@ export default function UserManagement() {
 
         {/* Pagination */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
-          <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">« Previous</button>
+          <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
+            « Previous
+          </button>
           <div className="flex items-center space-x-1">
-            <button className="px-3 py-1 text-sm font-medium bg-green-600 text-white rounded-md">1</button>
-            <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">2</button>
-            <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">3</button>
+            <button className="px-3 py-1 text-sm font-medium bg-green-600 text-white rounded-md">
+              1
+            </button>
+            <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
+              2
+            </button>
+            <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
+              3
+            </button>
             <span className="text-sm text-gray-500">...</span>
-            <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">10</button>
+            <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
+              10
+            </button>
           </div>
-          <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">Next »</button>
+          <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">
+            Next »
+          </button>
         </div>
       </div>
 
@@ -287,12 +368,14 @@ export default function UserManagement() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white rounded-2xl max-w-3xl w-full p-10 shadow-xl relative">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-green-600 font-semibold text-lg select-none">{editingUser ? "Edit User" : "Add New User"}</h2>
+              <h2 className="text-green-600 font-semibold text-lg select-none">
+                {editingUser ? "Edit User" : "Add New User"}
+              </h2>
               <button
                 onClick={() => {
-                  setShowAddUserModal(false)
-                  setShowEditUserModal(false)
-                  setEditingUser(null)
+                  setShowAddUserModal(false);
+                  setShowEditUserModal(false);
+                  setEditingUser(null);
                 }}
                 className="w-8 h-8 flex items-center justify-center rounded-full border border-red-400 text-red-600 hover:bg-red-50 transition-colors"
                 aria-label="Close modal"
@@ -303,15 +386,15 @@ export default function UserManagement() {
 
             <form
               onSubmit={(e) => {
-                e.preventDefault()
-                const formData = new FormData(e.target)
-                const firstName = formData.get("firstName")
-                const lastName = formData.get("lastName")
-                const countryCode = formData.get("countryCode")
-                const mobilePhone = formData.get("mobilePhone")
-                const emailAddress = formData.get("emailAddress")
-                const role = formData.get("role")
-                const remark = formData.get("remark")
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const firstName = formData.get("firstName");
+                const lastName = formData.get("lastName");
+                const countryCode = formData.get("countryCode");
+                const mobilePhone = formData.get("mobilePhone");
+                const emailAddress = formData.get("emailAddress");
+                const role = formData.get("role");
+                const remark = formData.get("remark");
 
                 handleSaveUser({
                   fullName: `${firstName} ${lastName}`,
@@ -320,14 +403,19 @@ export default function UserManagement() {
                   status: formData.get("status") || "Active",
                   email: emailAddress,
                   remark: remark,
-                })
+                });
               }}
               className="space-y-8"
             >
-              <h3 className="text-gray-600 font-semibold text-sm mb-4">Business location address and contact</h3>
+              <h3 className="text-gray-600 font-semibold text-sm mb-4">
+                Business location address and contact
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="firstName" className="block text-gray-500 font-medium mb-2 text-sm">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-gray-500 font-medium mb-2 text-sm"
+                  >
                     First Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -341,7 +429,10 @@ export default function UserManagement() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="lastName" className="block text-gray-500 font-medium mb-2 text-sm">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-gray-500 font-medium mb-2 text-sm"
+                  >
                     Last Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -358,12 +449,20 @@ export default function UserManagement() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="mobilePhone" className="block text-gray-500 font-medium mb-2 text-sm">
+                  <label
+                    htmlFor="mobilePhone"
+                    className="block text-gray-500 font-medium mb-2 text-sm"
+                  >
                     Mobile Phone <span className="text-red-500">*</span>
                   </label>
-                  <div className="flex">
-                    <Select name="countryCode" defaultValue={editingUser?.phone.split(" ")[0] || "+251"}>
-                      <SelectTrigger className="w-28 rounded-xl border border-gray-200 border-r-0 focus:ring-0 focus:border-green-500">
+
+                  <div className="flex gap-0">
+                    {/* Country Code Select */}
+                    <Select
+                      name="countryCode"
+                      defaultValue={editingUser?.phone?.split(" ")[0] || "+251"}
+                    >
+                      <SelectTrigger className="w-28 rounded-l-xl border border-gray-200 focus:ring-1 focus:ring-green-500 focus:border-green-500 outline-none">
                         <SelectValue placeholder="+251" />
                       </SelectTrigger>
                       <SelectContent>
@@ -372,19 +471,26 @@ export default function UserManagement() {
                         <SelectItem value="+44">+44</SelectItem>
                       </SelectContent>
                     </Select>
+
+                    {/* Mobile Number Input */}
                     <input
                       type="tel"
                       id="mobilePhone"
                       name="mobilePhone"
-                      defaultValue={editingUser?.phone.split(" ")[1] || ""}
-                      className="flex-1 border border-gray-200 rounded-l-none rounded-md px-3 py-2 text-gray-700 placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 outline-none"
+                      defaultValue={editingUser?.phone?.split(" ")[1] || ""}
+                      className="flex-1 border border-gray-200 rounded-r-xl px-3 py-2 text-gray-700 placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 outline-none"
                       placeholder="Enter phone number"
                       required
                     />
                   </div>
                 </div>
+
+                {/* email area */}
                 <div>
-                  <label htmlFor="emailAddress" className="block text-gray-500 font-medium mb-2 text-sm">
+                  <label
+                    htmlFor="emailAddress"
+                    className="block text-gray-500 font-medium mb-2 text-sm"
+                  >
                     Email Address <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -402,7 +508,10 @@ export default function UserManagement() {
               <h3 className="text-gray-600 font-semibold text-sm mb-4">Role</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="role" className="block text-gray-500 font-medium mb-2 text-sm">
+                  <label
+                    htmlFor="role"
+                    className="block text-gray-500 font-medium mb-2 text-sm"
+                  >
                     Role <span className="text-red-500">*</span>
                   </label>
                   <Select name="role" defaultValue={editingUser?.role || ""}>
@@ -412,20 +521,25 @@ export default function UserManagement() {
                     <SelectContent>
                       <SelectItem value="Super Admin">Super Admin</SelectItem>
                       <SelectItem value="Admin">Admin</SelectItem>
-                      <SelectItem value="Merchant Support">Merchant Support</SelectItem>
+                      <SelectItem value="Merchant Support">
+                        Merchant Support
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <label htmlFor="remark" className="block text-gray-500 font-medium mb-2 text-sm">
+                  <label
+                    htmlFor="remark"
+                    className="block text-gray-500 font-medium mb-2 text-sm"
+                  >
                     Remark
                   </label>
                   <textarea
                     id="remark"
                     name="remark"
                     defaultValue={editingUser?.remark || ""}
-                    className="w-full border border-gray-200 rounded-md px-3 py-2 text-gray-700 placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 outline-none resize-none"
-                    rows="3"
+                    className="w-full border border-gray-200 rounded-md px-3  text-gray-700 placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 outline-none resize-none"
+                    rows="2"
                     placeholder="Type your remark..."
                   ></textarea>
                 </div>
@@ -435,9 +549,9 @@ export default function UserManagement() {
                 <button
                   type="button"
                   onClick={() => {
-                    setShowAddUserModal(false)
-                    setShowEditUserModal(false)
-                    setEditingUser(null)
+                    setShowAddUserModal(false);
+                    setShowEditUserModal(false);
+                    setEditingUser(null);
                   }}
                   className="px-5 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
                 >
@@ -463,8 +577,8 @@ export default function UserManagement() {
               <h2 className="text-xl font-bold text-gray-900">Delete User</h2>
               <button
                 onClick={() => {
-                  setShowDeleteUserConfirmModal(false)
-                  setUserToDelete(null)
+                  setShowDeleteUserConfirmModal(false);
+                  setUserToDelete(null);
                 }}
                 className="text-gray-500 hover:text-gray-700"
               >
@@ -473,7 +587,12 @@ export default function UserManagement() {
             </div>
 
             <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg flex items-start space-x-3 mb-6">
-              <svg className="w-6 h-6 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-6 h-6 flex-shrink-0 mt-0.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -482,8 +601,13 @@ export default function UserManagement() {
                 />
               </svg>
               <div>
-                <p className="font-bold mb-1">Are you sure you want to delete this user?</p>
-                <p className="text-sm">This action will permanently delete the selected user. This cannot be undone.</p>
+                <p className="font-bold mb-1">
+                  Are you sure you want to delete this user?
+                </p>
+                <p className="text-sm">
+                  This action will permanently delete the selected user. This
+                  cannot be undone.
+                </p>
               </div>
             </div>
 
@@ -491,8 +615,8 @@ export default function UserManagement() {
               <button
                 type="button"
                 onClick={() => {
-                  setShowDeleteUserConfirmModal(false)
-                  setUserToDelete(null)
+                  setShowDeleteUserConfirmModal(false);
+                  setUserToDelete(null);
                 }}
                 className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
               >
@@ -510,5 +634,5 @@ export default function UserManagement() {
         </div>
       )}
     </div>
-  )
+  );
 }
