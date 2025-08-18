@@ -279,7 +279,7 @@ export default function RolesPage() {
                 </h3>
 
                 {/* Inputs */}
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 gap-6 bg-[#F9FAFB]">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Role Title <span className="text-red-500">*</span>
@@ -311,10 +311,11 @@ export default function RolesPage() {
                 {/* Privilege Sections */}
                 <div className="grid grid-cols-2 gap-6">
                   {/* Added Privileges */}
-                  <div>
+                  <div className="bg-[#F9FAFB] p-2 rounded-xl">
                     <h3 className="text-sm font-medium text-gray-700 mb-3">
                       Added Privilege
                     </h3>
+                    <hr className="mb-5"></hr>
                     <div className="space-y-2">
                       {selectedPrivileges.length === 0 && (
                         <p className="text-sm text-gray-500">
@@ -324,7 +325,7 @@ export default function RolesPage() {
                       {selectedPrivileges.map((privilege) => (
                         <div
                           key={privilege}
-                          className="flex items-center justify-between bg-gray-100 text-gray-600 px-3 py-2 rounded-md text-sm"
+                          className="flex items-center justify-between bg-gray-200 text-gray-600 px-3 py-2 rounded-md text-sm"
                         >
                           {privilege}
                           <button
@@ -340,12 +341,13 @@ export default function RolesPage() {
                   </div>
 
                   {/* Privileges */}
-                  <div>
+                  <div className="bg-[#F9FAFB] rounded-xl p-2">
                     <h3 className="text-sm font-medium text-gray-700 mb-3">
                       Privileges
                     </h3>
+                    <hr className="mb-5"></hr>
                     <div className="space-y-4">
-                      {Object.entries(allPrivileges).map(
+                      {Object.entries(allPrivileges).map( 
                         ([type, privileges]) => (
                           <div key={type}>
                             <p className="text-xs font-medium text-gray-600 mb-2 capitalize">
@@ -359,7 +361,7 @@ export default function RolesPage() {
                                   onClick={() =>
                                     handleTogglePrivilege(privilege)
                                   }
-                                  className="px-3 py-1.5 border border-gray-300 rounded-md bg-gray-50 text-gray-700 text-xs hover:bg-gray-100"
+                                  className="px-3 py-1.5 rounded-md bg-gray-200 text-gray-700 text-xs hover:bg-gray-100"
                                 >
                                   {privilege} +
                                 </button>
@@ -374,7 +376,7 @@ export default function RolesPage() {
               </div>
 
               {/* Footer Buttons */}
-              <div className="flex justify-end gap-3 pt-4 border-t px-6 py-4">
+              <div className="flex justify-end gap-3 pt-4 border-t px-6 py-4 bg-[#F9FAFB]">
                 <button
                   type="button"
                   onClick={() => setShowAddEditRoleModal(false)}
