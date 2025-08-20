@@ -6,7 +6,7 @@ import ForgotPasswordScreen from "./components/ForgotPasswordScreen"
 import CheckInboxScreen from "./components/CheckInboxScreen"
 import MerchantDashboard from "./components/MerchantDashboard"
 import CustomerApp from "./components/CustomerApp"
-import { Dashboard } from "./components/merchant/dashboard"
+import { Dashboard } from "./components/merchant/components/dashboard"
 
 
 export default function App() {
