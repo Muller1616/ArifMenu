@@ -7,6 +7,7 @@ import CheckInboxScreen from "./components/CheckInboxScreen"
 import MerchantDashboard from "./components/MerchantDashboard"
 import CustomerApp from "./components/CustomerApp"
 
+
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("login")
   const [userEmail, setUserEmail] = useState("")

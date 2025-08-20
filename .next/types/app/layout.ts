@@ -1,4 +1,4 @@
-// File: C:\ArifMenuForTest\NewwwArifMenuuuu\ArifMenu\app\layout.js
+// File: /home/nathnael19/Desktop/Projects/Web/ArifPay/Menu/ArifMenu/app/layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
