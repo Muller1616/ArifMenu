@@ -179,7 +179,7 @@ export default function DashboardHome({ user }) {
       changeType: "negative",
       bgColor: "bg-green-50",
       borderColor: "border-green-200",
-      icon: "totalsalesicon.svg",
+      icon: "activeusers.svg",
     },
     {
       title: "Total Order",
@@ -246,7 +246,7 @@ export default function DashboardHome({ user }) {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className={`bg-[#f8f8f9] flex rounded-2xl p-6    ${stat.bgColor}`}
+            className={`bg-[#efeff5] flex rounded-2xl p-6    ${stat.bgColor}`}
           >
             <div className="mb-4">
               <p className="text-sm text-gray-500 mb-2">{stat.title}</p>
@@ -343,7 +343,7 @@ export default function DashboardHome({ user }) {
         </div>
       </div>
       {/* : Deals Details table  */}
-      <div className="bg-[#f3f4f6] shadow-sm rounded-2xl ">
+      <div className="bg-white shadow-sm rounded-2xl ">
         <div className="p-6 border-b border-gray-100">
           <h3 className="text-2xl font-semibold text-gray-500">
             Deals Details
@@ -352,7 +352,7 @@ export default function DashboardHome({ user }) {
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead className="bg-[#eff0f6] rounded-2xl">
-              <tr className="border-b border-gray-100 bg-slate-800]">
+              <tr className="border-b border-gray-100 bg-slate-800] rounded-xl m-5">
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">
                   Product Name
                 </th>
