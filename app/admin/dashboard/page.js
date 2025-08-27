@@ -9,7 +9,7 @@ import MerchantsPage from "@/app/admin/merchants/page";
 import AddMerchantPage from "@/app/admin/merchants/addmerchant/page"; // Import the new AddMerchantPage
 import RolesPage from "@/app/admin/roles/page"; // Import the new RolesPage
 
-export default function MerchantDashboard({
+export default function AdminDashboard({
   user,
   onLogout,
   onShowCustomerApp,

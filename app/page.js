@@ -1,21 +1,18 @@
 "use client";
 
-import { useState } from "react"
-import LoginScreen from "./auth/login/page"
-import ForgotPasswordScreen from "./auth/forgot/page"
-import CheckInboxScreen from "./auth/checkinbox/page"
-import MerchantDashboard from "./admin/dashboard/page"
-import CreatePasswordScreen from "./auth/newpassword/page"
-import { useRouter } from "next/navigation"
-
+import { useState } from "react";
+import LoginScreen from "./auth/login/page";
+import ForgotPasswordScreen from "./auth/forgot/page";
+import CheckInboxScreen from "./auth/checkinbox/page";
+import MerchantDashboard from "./merchant/dashboard/page";  
+import AdminDashboard from "./admin/dashboard/page";        
+import CreatePasswordScreen from "./auth/newpassword/page";
 
 export default function App() {
-  const router = useRouter()
-  const [currentScreen, setCurrentScreen] = useState("login")
-  const [userEmail, setUserEmail] = useState("")
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [user, setUser] = useState(null)
-  const [showCustomerApp, setShowCustomerApp] = useState(false)
+  const [currentScreen, setCurrentScreen] = useState("login");
+  const [userEmail, setUserEmail] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
   const handleScreenChange = (screen, email = "") => {
     setCurrentScreen(screen);
@@ -33,24 +30,21 @@ export default function App() {
     setUser(null);
     setCurrentScreen("login");
     setUserEmail("");
-    setShowCustomerApp(false);
   };
 
   const renderScreen = () => {
-    if (isAuthenticated) {
-      return (
-        <MerchantDashboard user={user} onLogout={handleLogout} onShowCustomerApp={() => setShowCustomerApp(true)} />
-        
-      )
+    if (isAuthenticated && user) {
+      if (user.role === "Admin") {
+        return <AdminDashboard user={user} onLogout={handleLogout} />;
+      } else if (user.role === "Merchant") {
+        return <MerchantDashboard user={user} onLogout={handleLogout} />;
+      }
     }
 
     switch (currentScreen) {
       case "login":
         return (
-          <LoginScreen
-            onScreenChange={handleScreenChange}
-            onLogin={handleLogin}
-          />
+          <LoginScreen onScreenChange={handleScreenChange} onLogin={handleLogin} />
         );
       case "forgot-password":
         return <ForgotPasswordScreen onScreenChange={handleScreenChange} />;
@@ -63,18 +57,10 @@ export default function App() {
           />
         );
       case "create-password":
-        return (
-          <CreatePasswordScreen
-            onScreenChange={handleScreenChange}
-            onLogin={handleLogin}
-          />
-        );
+        return <CreatePasswordScreen onScreenChange={handleScreenChange} onLogin={handleLogin} />;
       default:
         return (
-          <LoginScreen
-            onScreenChange={handleScreenChange}
-            onLogin={handleLogin}
-          />
+          <LoginScreen onScreenChange={handleScreenChange} onLogin={handleLogin} />
         );
     }
   };
