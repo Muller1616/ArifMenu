@@ -6,6 +6,8 @@ import ForgotPasswordScreen from "./components/ForgotPasswordScreen"
 import CheckInboxScreen from "./components/CheckInboxScreen"
 import MerchantDashboard from "./components/MerchantDashboard"
 import CustomerApp from "./components/CustomerApp"
+// import { Dashboard } from "./components/merchant/components/dashboard"
+
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState("login")
@@ -41,6 +43,7 @@ export default function App() {
     if (isAuthenticated) {
       return (
         <MerchantDashboard user={user} onLogout={handleLogout} onShowCustomerApp={() => setShowCustomerApp(true)} />
+        // <Dashboard></Dashboard>
       )
     }
 

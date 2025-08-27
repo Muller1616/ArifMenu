@@ -20,7 +20,7 @@ export default function Sidebar({ currentPage, setCurrentPage }) {
     <div
       className={`fixed inset-y-0 left-0 z-50 transform transition-all duration-300 ease-in-out
         m-5 rounded-xl shadow-md
-        ${collapsed ? "w-20" : "w-44"}
+        ${collapsed ? "w-20" : "w-64"}
       `}
       style={{ backgroundColor: "#ffffff" }}
     >
