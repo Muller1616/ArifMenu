@@ -1,15 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import LoginScreen from "./components/LoginScreen"
-import ForgotPasswordScreen from "./components/ForgotPasswordScreen"
+import LoginScreen from "./auth/login/page"
+import ForgotPasswordScreen from "./auth/forgot/page"
 import CheckInboxScreen from "./components/CheckInboxScreen"
 import MerchantDashboard from "./components/MerchantDashboard"
-// import CustomerApp from "./components/CustomerApp"
-// import { Dashboard } from "./components/merchant/components/dashboard"
+import { useRouter } from "next/navigation"
 
 
 export default function App() {
+  const router = useRouter()
   const [currentScreen, setCurrentScreen] = useState("login")
   const [userEmail, setUserEmail] = useState("")
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -36,14 +36,10 @@ export default function App() {
   }
 
   const renderScreen = () => {
-    if (showCustomerApp) {
-      return <CustomerApp onBackToMerchant={() => setShowCustomerApp(false)} />
-    }
-
     if (isAuthenticated) {
       return (
         <MerchantDashboard user={user} onLogout={handleLogout} onShowCustomerApp={() => setShowCustomerApp(true)} />
-        // <Dashboard></Dashboard>
+        
       )
     }
 
