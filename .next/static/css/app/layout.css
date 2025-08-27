@@ -853,6 +853,9 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.ml-3 {
+  margin-left: 0.75rem;
+}
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -1106,6 +1109,9 @@ video {
 }
 .w-px {
   width: 1px;
+}
+.w-44 {
+  width: 11rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1901,6 +1907,9 @@ video {
 .to-green-600 {
   --tw-gradient-to: #16a34a var(--tw-gradient-to-position);
 }
+.to-black {
+  --tw-gradient-to: #000 var(--tw-gradient-to-position);
+}
 .fill-current {
   fill: currentColor;
 }
@@ -2406,6 +2415,14 @@ video {
 }
 .ring-offset-background {
   --tw-ring-offset-color: hsl(var(--background));
+}
+.brightness-0 {
+  --tw-brightness: brightness(0);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+.invert {
+  --tw-invert: invert(100%);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
