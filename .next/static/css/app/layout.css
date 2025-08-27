@@ -1050,9 +1050,6 @@ video {
 .w-40 {
   width: 10rem;
 }
-.w-44 {
-  width: 11rem;
-}
 .w-48 {
   width: 12rem;
 }
@@ -1656,10 +1653,13 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
 }
+<<<<<<< HEAD
 .bg-\[\#efeff5\] {
   --tw-bg-opacity: 1;
   background-color: rgb(239 239 245 / var(--tw-bg-opacity, 1));
 }
+=======
+>>>>>>> cc58279245fad05853f7a69235ff567adaeacd4b
 .bg-\[\#eff0f6\] {
   --tw-bg-opacity: 1;
   background-color: rgb(239 240 246 / var(--tw-bg-opacity, 1));
