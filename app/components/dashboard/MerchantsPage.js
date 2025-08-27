@@ -5,8 +5,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MoreVertical, Eye, QrCode, Edit, Folder, List, Ban, Search, Plus } from "lucide-react"
 
 export default function MerchantsPage({ onNavigateToAddMerchant }) {
-  // Added onNavigateToAddMerchant prop
   const [searchTerm, setSearchTerm] = useState("")
+  const [selectedMerchants, setSelectedMerchants] = useState([])
 
   const merchants = [
     {
@@ -104,14 +104,27 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
   const filteredMerchants = merchants.filter(
     (merchant) =>
       merchant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      merchant.contactPerson.toLowerCase().includes(searchTerm.toLowerCase()),
+      merchant.contactPerson.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedMerchants(filteredMerchants.map((m) => m.id))
+    } else {
+      setSelectedMerchants([])
+    }
+  }
+
+  const handleSelectOne = (id) => {
+    setSelectedMerchants((prev) =>
+      prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id]
+    )
+  }
+
+  const isAllSelected = filteredMerchants.length > 0 && filteredMerchants.every((m) => selectedMerchants.includes(m.id))
 
   return (
     <div className="p-8 bg-white rounded-2xl min-h-screen">
-      {/* Breadcrumbs (handled by Header.js) */}
-
-      {/* Search and Add Merchant */}
       <div className="flex items-center justify-between mb-6">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -124,7 +137,7 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
           />
         </div>
         <button
-          onClick={onNavigateToAddMerchant} // Call the new navigation prop
+          onClick={onNavigateToAddMerchant}
           className="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center hover:bg-green-700 transition-colors"
         >
           <Plus className="w-5 h-5 mr-2" />
@@ -132,14 +145,18 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
         </button>
       </div>
 
-      {/* Merchants Table */}
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-100">
             <thead className="bg-[#eff0f6]">
               <tr>
                 <th className="px-6 py-4 text-left">
-                  <input type="checkbox" className="rounded border-gray-300 text-green-600 focus:ring-green-500" />
+                  <input
+                    type="checkbox"
+                    checked={isAllSelected}
+                    onChange={handleSelectAll}
+                    className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                  />
                 </th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">#</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Logo</th>
@@ -155,7 +172,12 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
               {filteredMerchants.map((merchant) => (
                 <tr key={merchant.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
-                    <input type="checkbox" className="rounded border-gray-300 text-green-600 focus:ring-green-500" />
+                    <input
+                      type="checkbox"
+                      checked={selectedMerchants.includes(merchant.id)}
+                      onChange={() => handleSelectOne(merchant.id)}
+                      className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                    />
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-900">{merchant.id}</td>
                   <td className="px-6 py-4">
@@ -172,7 +194,9 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
                   <td className="px-6 py-4">
                     <span
                       className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${
-                        merchant.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+                        merchant.status === "Active"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
                       }`}
                     >
                       {merchant.status}
@@ -219,7 +243,6 @@ export default function MerchantsPage({ onNavigateToAddMerchant }) {
           </table>
         </div>
 
-        {/* Pagination */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
           <button className="px-3 py-1 text-sm text-gray-600 rounded-md hover:bg-gray-100">« Previous</button>
           <div className="flex items-center space-x-1">
