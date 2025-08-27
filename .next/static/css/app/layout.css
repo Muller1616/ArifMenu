@@ -805,9 +805,6 @@ video {
 .ml-auto {
   margin-left: auto;
 }
-.mr-1 {
-  margin-right: 0.25rem;
-}
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -1052,9 +1049,6 @@ video {
 }
 .w-40 {
   width: 10rem;
-}
-.w-44 {
-  width: 11rem;
 }
 .w-48 {
   width: 12rem;
@@ -1651,22 +1645,6 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(60 163 43 / var(--tw-bg-opacity, 1));
 }
-.bg-\[\#C2C2FF\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(194 194 255 / var(--tw-bg-opacity, 1));
-}
-.bg-\[\#C2FFC2\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(194 255 194 / var(--tw-bg-opacity, 1));
-}
-.bg-\[\#F5F5FF\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 255 / var(--tw-bg-opacity, 1));
-}
-.bg-\[\#F5FFF5\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 255 245 / var(--tw-bg-opacity, 1));
-}
 .bg-\[\#F8FAFC\] {
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
@@ -1674,22 +1652,6 @@ video {
 .bg-\[\#F9FAFB\] {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-}
-.bg-\[\#FFD7C2\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 215 194 / var(--tw-bg-opacity, 1));
-}
-.bg-\[\#FFEEC2\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 238 194 / var(--tw-bg-opacity, 1));
-}
-.bg-\[\#FFF8F5\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 248 245 / var(--tw-bg-opacity, 1));
-}
-.bg-\[\#FFFDF5\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 253 245 / var(--tw-bg-opacity, 1));
 }
 .bg-\[\#eff0f6\] {
   --tw-bg-opacity: 1;
@@ -2180,22 +2142,6 @@ video {
 .tracking-widest {
   letter-spacing: 0.1em;
 }
-.text-\[\#29FF29\] {
-  --tw-text-opacity: 1;
-  color: rgb(41 255 41 / var(--tw-text-opacity, 1));
-}
-.text-\[\#7029FF\] {
-  --tw-text-opacity: 1;
-  color: rgb(112 41 255 / var(--tw-text-opacity, 1));
-}
-.text-\[\#FF7029\] {
-  --tw-text-opacity: 1;
-  color: rgb(255 112 41 / var(--tw-text-opacity, 1));
-}
-.text-\[\#FFC229\] {
-  --tw-text-opacity: 1;
-  color: rgb(255 194 41 / var(--tw-text-opacity, 1));
-}
 .text-accent-foreground {
   color: hsl(var(--accent-foreground));
 }
@@ -2676,10 +2622,6 @@ video {
 .hover\:bg-gray-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-}
-.hover\:bg-gray-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
 }
 .hover\:bg-gray-700:hover {
   --tw-bg-opacity: 1;
