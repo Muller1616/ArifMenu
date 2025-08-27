@@ -113,10 +113,6 @@ export default function CheckInboxScreen({
       <div className="w-full lg:w-1/2 flex bg-gray-100 m-3 rounded-2xl items-center justify-center p-6 lg:p-12">
         <div className="w-full max-w-md">
           {/* Mobile Brand Header */}
-          {/* <div className="lg:hidden text-center mb-8">
-            <h1 className="text-2xl font-bold text-green-600 mb-2">Arifpay</h1>
-            <p className="text-gray-600">Check your inbox</p>
-          </div> */}
 
           <div className="bg-white rounded-2xl shadow-xl p-10 w-372 h-692">
             <div className="text-center mb-8">
@@ -138,9 +134,7 @@ export default function CheckInboxScreen({
                 address. Please check your inbox to retrieve it and complete the
                 process.
               </p>
-              {/* <p className="text-green-600 font-medium">
-                {userEmail || "your email"}
-              </p> */}
+ 
             </div>
 
             <form onSubmit={handleVerify} className="space-y-6">
@@ -212,13 +206,7 @@ export default function CheckInboxScreen({
               </div>
 
               <div className="mt-6 text-center ">
-                {/* <p className="text-gray-600">
-                Don't have an account?{" "}
-                <button className="text-green-600 hover:text-green-700 font-medium">
-                  Sign up
-                </button>
-                
-              </p> */}
+  
                 <div className="border-b-2 border-gray-100 "></div>
                 <p className="text-gray-400 text-xs mt-3 ">
                   © Arif Financial Technologies — Built by and for Arif
