@@ -8,28 +8,28 @@ export default function LoginScreen({ onScreenChange, onLogin }) {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    if (email === "admin@gmail.com" && password === "1234") {
-      const userData = {
-        id: 1,
-        name: "Admin User",
-        email,
-        role: "Admin",
-      };
-      onLogin(userData);
-    } else if (email === "merchant@gmail.com" && password === "1234") {
-      const userData = {
-        id: 2,
-        name: "Merchant User",
-        email,
-        role: "Merchant",
-      };
-      onLogin(userData);
-    } else {
-      alert("Invalid credentials");
-    }
-  };
+        if (email === "admin@gmail.com" && password === "1234") {
+            const userData = {
+                id: 1,
+                name: "Admin User",
+                email,
+                role: "Admin",
+            };
+            onLogin(userData);
+        } else if (email === "merchant@gmail.com" && password === "1234") {
+            const userData = {
+                id: 2,
+                name: "Merchant User",
+                email,
+                role: "Merchant",
+            };
+            onLogin(userData);
+        } else {
+            alert("Invalid credentials");
+        }
+    };
 
     return (
         <div className="min-h-screen flex bg-white">

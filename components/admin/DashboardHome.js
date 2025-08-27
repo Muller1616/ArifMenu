@@ -1,5 +1,3 @@
-
-//##################################################################1
 "use client";
 export default function DashboardHome({ user }) {
   // : Exact metrics from
