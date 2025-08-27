@@ -1,9 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import "../../public/images/ariflogo.svg";
-import "../../public/images/xor.svg";
-import "../../public/images/bottomarificon.svg";
 
 export default function CreatePasswordScreen({
   userEmail,
