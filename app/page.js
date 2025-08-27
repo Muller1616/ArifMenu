@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react"
 import LoginScreen from "./auth/login/page"
@@ -17,23 +17,23 @@ export default function App() {
   const [showCustomerApp, setShowCustomerApp] = useState(false)
 
   const handleScreenChange = (screen, email = "") => {
-    setCurrentScreen(screen)
-    if (email) setUserEmail(email)
-  }
+    setCurrentScreen(screen);
+    if (email) setUserEmail(email);
+  };
 
   const handleLogin = (userData) => {
-    setIsAuthenticated(true)
-    setUser(userData)
-    setCurrentScreen("dashboard")
-  }
+    setIsAuthenticated(true);
+    setUser(userData);
+    setCurrentScreen("dashboard");
+  };
 
   const handleLogout = () => {
-    setIsAuthenticated(false)
-    setUser(null)
-    setCurrentScreen("login")
-    setUserEmail("")
-    setShowCustomerApp(false)
-  }
+    setIsAuthenticated(false);
+    setUser(null);
+    setCurrentScreen("login");
+    setUserEmail("");
+    setShowCustomerApp(false);
+  };
 
   const renderScreen = () => {
     if (isAuthenticated) {
@@ -45,15 +45,38 @@ export default function App() {
 
     switch (currentScreen) {
       case "login":
-        return <LoginScreen onScreenChange={handleScreenChange} onLogin={handleLogin} />
+        return (
+          <LoginScreen
+            onScreenChange={handleScreenChange}
+            onLogin={handleLogin}
+          />
+        );
       case "forgot-password":
-        return <ForgotPasswordScreen onScreenChange={handleScreenChange} />
+        return <ForgotPasswordScreen onScreenChange={handleScreenChange} />;
       case "check-inbox":
-        return <CheckInboxScreen userEmail={userEmail} onScreenChange={handleScreenChange} onLogin={handleLogin} />
+        return (
+          <CheckInboxScreen
+            userEmail={userEmail}
+            onScreenChange={handleScreenChange}
+            onLogin={handleLogin}
+          />
+        );
+      case "create-password":
+        return (
+          <CreatePasswordScreen
+            onScreenChange={handleScreenChange}
+            onLogin={handleLogin}
+          />
+        );
       default:
-        return <LoginScreen onScreenChange={handleScreenChange} onLogin={handleLogin} />
+        return (
+          <LoginScreen
+            onScreenChange={handleScreenChange}
+            onLogin={handleLogin}
+          />
+        );
     }
-  }
+  };
 
-  return <div className="min-h-screen bg-gray-100">{renderScreen()}</div>
+  return <div className="min-h-screen bg-gray-100">{renderScreen()}</div>;
 }

@@ -20,7 +20,7 @@ export default function Sidebar({ currentPage, setCurrentPage }) {
     <div
       className={`fixed inset-y-0 left-0 z-50 transform transition-all duration-300 ease-in-out
         m-5 rounded-xl shadow-md
-        ${collapsed ? "w-20" : "w-64"}
+        ${collapsed ? "w-20" : "w-44"}
       `}
       style={{ backgroundColor: "#ffffff" }}
     >
@@ -40,7 +40,7 @@ export default function Sidebar({ currentPage, setCurrentPage }) {
           onClick={() => setCollapsed(!collapsed)}
           className="p-2 hover:bg-gray-100 rounded-lg"
         >
-          <Image src="/side.svg" alt="Toggle" width={16} height={16} />
+          <Image src="/side.svg" alt="Toggle" width={50} height={50} />
         </button>
       </div>
 
