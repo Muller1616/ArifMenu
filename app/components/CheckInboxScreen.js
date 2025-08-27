@@ -167,6 +167,7 @@ export default function CheckInboxScreen({
               <button
                 type="submit"
                 disabled={verificationCode.some((digit) => !digit)}
+                onClick={() =>onScreenChange("create-password")}
                 className="w-full bg-[#3CA32B] text-white py-3 px-4 rounded-2xl hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all font-medium"
               >
                 Continue
