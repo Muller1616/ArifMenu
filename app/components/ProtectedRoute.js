@@ -1,27 +1,27 @@
-"use client"
+// "use client"
 
-import { useEffect, useState } from "react"
-import LoadingScreen from "./LoadingScreen"
+// import { useEffect, useState } from "react"
+// import LoadingScreen from "./LoadingScreen"
 
-export default function ProtectedRoute({ children, isAuthenticated }) {
-  const [isLoading, setIsLoading] = useState(true)
+// export default function ProtectedRoute({ children, isAuthenticated }) {
+//   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    // Simulate authentication check
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
+//   useEffect(() => {
+//     // Simulate authentication check
+//     const timer = setTimeout(() => {
+//       setIsLoading(false)
+//     }, 1000)
 
-    return () => clearTimeout(timer)
-  }, [])
+//     return () => clearTimeout(timer)
+//   }, [])
 
-  if (isLoading) {
-    return <LoadingScreen />
-  }
+//   if (isLoading) {
+//     return <LoadingScreen />
+//   }
 
-  if (!isAuthenticated) {
-    return null // Will redirect to login
-  }
+//   if (!isAuthenticated) {
+//     return null // Will redirect to login
+//   }
 
-  return children
-}
+//   return children
+// }

@@ -3,8 +3,9 @@
 import { useState } from "react"
 import LoginScreen from "./auth/login/page"
 import ForgotPasswordScreen from "./auth/forgot/page"
-import CheckInboxScreen from "./components/CheckInboxScreen"
-import MerchantDashboard from "./components/MerchantDashboard"
+import CheckInboxScreen from "./auth/checkinbox/page"
+import MerchantDashboard from "./admin/dashboard/page"
+import CreatePasswordScreen from "./auth/newpassword/page"
 import { useRouter } from "next/navigation"
 
 
