@@ -48,23 +48,10 @@ export default function ForgotPasswordScreen({ onScreenChange }) {
       <div className="w-full lg:w-1/2 flex bg-gray-100 m-3 rounded-2xl items-center justify-center p-6 lg:p-12">
         <div className="w-full max-w-md">
           {/* Mobile Brand Header */}
-          {/* <div className="lg:hidden text-center mb-8">
-            <h1 className="text-2xl font-bold text-green-600 mb-2">Arifpay</h1>
-            <p className="text-gray-600">Reset your password</p>
-          </div> */}
 
           <div className="bg-white rounded-2xl w-372 h-692 shadow-xl p-10">
             <div className="text-center mb-8">
-              {/* <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-              </div> */}
+
               <h2 className="text-2xl  text-gray-500 h-12 border-b-2 border-gray-100">
                 Forgot your password? 🤷🏾‍♂️
               </h2>
@@ -118,13 +105,6 @@ export default function ForgotPasswordScreen({ onScreenChange }) {
               </div>
 
               <div className="mt-6 text-center ">
-                {/* <p className="text-gray-600">
-                Don't have an account?{" "}
-                <button className="text-green-600 hover:text-green-700 font-medium">
-                  Sign up
-                </button>
-                
-              </p> */}
                 <div className="border-b-2 border-gray-100 "></div>
                 <p className="text-gray-400 text-xs mt-3 ">
                   © Arif Financial Technologies — Built by and for Arif

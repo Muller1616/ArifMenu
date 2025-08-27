@@ -116,16 +116,6 @@ export default function CheckInboxScreen({
 
           <div className="bg-white rounded-2xl shadow-xl p-10 w-372 h-692">
             <div className="text-center mb-8">
-              {/* <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-              </div> */}
               <h2 className="text-2xl  text-gray-500 h-12 border-b-2 border-gray-100">
                 Check your inbox 📥
               </h2>
@@ -134,14 +124,12 @@ export default function CheckInboxScreen({
                 address. Please check your inbox to retrieve it and complete the
                 process.
               </p>
- 
+
             </div>
 
             <form onSubmit={handleVerify} className="space-y-6">
               <div>
-                {/* <label className="block text-sm font-medium text-gray-700 mb-4 text-center">
-                  Enter Verification Code
-                </label> */}
+
                 <div className="flex justify-center space-x-3">
                   {verificationCode.map((digit, index) => (
                     <input
@@ -161,7 +149,7 @@ export default function CheckInboxScreen({
               <button
                 type="submit"
                 disabled={verificationCode.some((digit) => !digit)}
-                onClick={() =>onScreenChange("create-password")}
+                onClick={() => onScreenChange("create-password")}
                 className="w-full bg-[#3CA32B] text-white py-3 px-4 rounded-2xl hover:bg-green-700 focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all font-medium"
               >
                 Continue
@@ -206,7 +194,7 @@ export default function CheckInboxScreen({
               </div>
 
               <div className="mt-6 text-center ">
-  
+
                 <div className="border-b-2 border-gray-100 "></div>
                 <p className="text-gray-400 text-xs mt-3 ">
                   © Arif Financial Technologies — Built by and for Arif

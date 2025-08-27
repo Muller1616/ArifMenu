@@ -10,18 +10,24 @@ export default function LoginScreen({ onScreenChange, onLogin }) {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        // Demo authentication - in real app, validate with backend
-        if (email && password) {
+        if (email === "admin@gmail.com" && password === "1234") {
             const userData = {
                 id: 1,
                 name: "Admin User",
-                email: email,
+                email,
                 role: "Admin",
-                businessName: "Arifpay Merchant",
+            };
+            onLogin(userData);
+        } else if (email === "merchant@gmail.com" && password === "1234") {
+            const userData = {
+                id: 2,
+                name: "Merchant User",
+                email,
+                role: "Merchant",
             };
             onLogin(userData);
         } else {
-            alert("Please enter both email and password");
+            alert("Invalid credentials");
         }
     };
 
@@ -164,13 +170,6 @@ export default function LoginScreen({ onScreenChange, onLogin }) {
                         </div>
 
                         <div className="mt-6 text-center ">
-                            {/* <p className="text-gray-600">
-                Don't have an account?{" "}
-                <button className="text-green-600 hover:text-green-700 font-medium">
-                  Sign up
-                </button>
-                
-              </p> */}
                             <div className="border-b-2 border-gray-100 "></div>
                             <p className="text-gray-400 text-xs mt-3 ">© Arif Financial Technologies — Built by and for Arif Financial Technologies.</p>
                         </div>
