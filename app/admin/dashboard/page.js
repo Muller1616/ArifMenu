@@ -1,19 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Sidebar from "";
-import Header from "././dashboard/Header";
-import DashboardHome from "./dashboard/DashboardHome";
-import TransactionsList from "./dashboard/TransactionsList";
-import ProductsManagement from "./dashboard/ProductsManagement";
-import QRCodeGenerator from "./dashboard/QRCodeGenerator";
-import AnalyticsPage from "./dashboard/AnalyticsPage";
-import SettingsPage from "./dashboard/SettingsPage";
-import MapView from "./dashboard/MapView";
-import UserManagement from "./dashboard/UserManagement";
-import MerchantsPage from "./dashboard/MerchantsPage";
-import AddMerchantPage from "./dashboard/AddMerchantPage"; // Import the new AddMerchantPage
-import RolesPage from "./dashboard/RolesPage"; // Import the new RolesPage
+import Sidebar from "@/components/admin/Sidebar";
+import Header from "@/components/admin/Header";
+import DashboardHome from "@/components/admin/DashboardHome";
+import UserManagement from "@/app/admin/users/page";
+import MerchantsPage from "@/app/admin/merchants/page";
+import AddMerchantPage from "@/app/admin/merchants/addmerchant/page"; // Import the new AddMerchantPage
+import RolesPage from "@/app/admin/roles/page"; // Import the new RolesPage
 
 export default function MerchantDashboard({
   user,
@@ -37,22 +31,12 @@ export default function MerchantDashboard({
         return (
           <AddMerchantPage onNavigateBack={() => setCurrentPage("merchants")} />
         );
-      case "transactions":
-        return <TransactionsList />;
-      case "products":
-        return <ProductsManagement />;
-      case "qr-code":
-        return <QRCodeGenerator user={user} />;
-      case "analytics":
-        return <AnalyticsPage />;
-      case "map":
-        return <MapView />;
+  
+
       case "users":
         return <UserManagement />;
       case "roles": // New case for RolesPage
         return <RolesPage />;
-      case "settings":
-        return <SettingsPage user={user} />;
       default:
         return <DashboardHome user={user} />;
     }
