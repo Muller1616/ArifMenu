@@ -66,7 +66,7 @@ const menuItemsData = [
   },
 ]
 
-export function MerchantMenuManagement() {
+export default function MerchantMenuManagement() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedItems, setSelectedItems] = useState<number[]>([])
   const [menuItems, setMenuItems] = useState(menuItemsData)

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function MerchantQRCodesPage() {
+export default function MerchantQRCodesPage() {
   const [menuUrl, setMenuUrl] = useState("https://www.arifmenu.com/foodzone")
   const [menuName, setMenuName] = useState("Foodzone Menu")
 

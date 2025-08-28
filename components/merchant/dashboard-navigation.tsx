@@ -13,7 +13,7 @@ interface DashboardNavigationProps {
   onTabChange: (tab: string) => void
 }
 
-export function MerchantDashboardNavigation({ activeTab, onTabChange }: DashboardNavigationProps) {
+export default function MerchantDashboardNavigation({ activeTab, onTabChange }: DashboardNavigationProps) {
   return (
     <nav className="bg-gray-50 border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

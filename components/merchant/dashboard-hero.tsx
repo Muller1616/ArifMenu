@@ -1,4 +1,4 @@
-export function MerchantDashboardHero() {
+export default function MerchantDashboardHero() {
   return (
     <div className="relative rounded-2xl overflow-hidden mb-8">
       <div

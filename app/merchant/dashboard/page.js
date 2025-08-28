@@ -1,19 +1,64 @@
-"use client";
-import { MerchantMenuManagement } from "@/app/merchant/manage/page"
-export default function MerchantDashboard({ user, onLogout }) {
-  // return (<>
-  //   <div className="p-10">
-  //     <h1 className="text-3xl font-bold text-blue-700">Merchant Dashboard</h1>
-  //     <p className="mt-4 text-gray-600">Welcome, {user?.name} ({user?.email})</p>
-  //     <button
-  //       onClick={onLogout}
-  //       className="mt-6 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700"
-  //     >
-  //       Logout
-  //     </button>
-  //   </div>
-  //   <CategoriesManagement />
-  // </>
-  // );
-  return <MerchantMenuManagement />;
+"use client"
+
+import { useState } from "react"
+import DashboardHeader from "@/components/admin/Header"
+import MerchantDashboardNavigation from "@/components/merchant/dashboard-navigation"
+import DashboardHero from "@/components/merchant/dashboard-hero"
+import { AnalyticsCards } from "@/components/merchant/analytics-cards"
+import { AnalyticsCharts } from "@/components/merchant/analytics-charts"
+import { CategoriesManagement } from "@/app/merchant/categories/page"
+import QRCodesPage from "@/app/merchant/qr/page"
+import MerchantMenuManagement from "@/app/merchant/manage/page"
+
+export function MerchantDashboard({ user,
+  onLogout,
+  onShowCustomerApp,
+}) {
+  const [activeab, setActiveTab] = useState("dashboard")
+   const [currentPage, setCurrentPage] = useState("dashboard");
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const renderContent = () => {
+    switch (currentPage) {
+      case "dashboard":
+        return (
+          <>
+            <DashboardHero />
+            <AnalyticsCards />
+            <AnalyticsCharts />
+          </>
+        )
+      case "categories":
+        return <CategoriesManagement onNavigateBack={() => setCurrentPage("categories")}/>
+      case "qr-codes":
+        return <QRCodesPage onNavigateBack={() => setCurrentPage("qr-codes")} />
+      case "manage-menu":
+        return <MerchantMenuManagement onNavigateBack={() => setCurrentPage("manage-menu")}/>
+      default:
+        return (
+          <>
+            <DashboardHero />
+            <AnalyticsCards />
+            <AnalyticsCharts />
+          </>
+        )
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <DashboardHeader user={user}
+        setSidebarOpen={setSidebarOpen}
+        onLogout={onLogout}
+        onShowCustomerApp={onShowCustomerApp}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage} // Add this line
+      />
+      <div className="mt-6">
+        <MerchantDashboardNavigation activeTab={currentPage} onTabChange={setCurrentPage} />
+      </div>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-6">{renderContent()}</main>
+    </div>
+  )
 }
