@@ -38,6 +38,7 @@ export default function App() {
         return <AdminDashboard user={user} onLogout={handleLogout} />;
       } else if (user.role === "Merchant") {
         return <MerchantDashboard user={user} onLogout={handleLogout} />;
+        
       }
     }
 
