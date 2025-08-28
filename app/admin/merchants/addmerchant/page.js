@@ -21,6 +21,10 @@ import {
 } from "@/components/ui/select";
 
 
+import { DeleteConfirmModal } from "@/components/merchant/modals/delete-confirm-modal";
+import { DeleteCategoryConfirmModal } from "@/components/merchant/modals/delete-confirmation-modal";      
+import { AddItemModal } from "@/components/merchant/modals/add-item-modal";
+import { AddCategoryModal } from "@/components/merchant/modals/add-category-modal";
 import BusinessInfo from "@/app/admin//merchants/addmerchant/info/page"
 import BusinessAddress from "@/app/admin//merchants/addmerchant/address/page"
 import BusinessCategory from "@/app/admin//merchants/addmerchant/category/page"
@@ -115,6 +119,97 @@ export default function AddMerchantPage({ onNavigateBack }) {
     setSelectedCategoryPhotoPreview(null); // Clear photo preview for new category
     setShowAddCategoryModal(true);
   };
+
+  const [menuItems, setMenuItems] = useState([
+    {
+      id: 1,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Spicy Chai Latte",
+      ingredients:
+        "Spicy Chai Latte: A warm blend of black tea, cinnamon, ginger, and a hint of chili pepper.",
+      category: "Hot Beverages",
+      price: "ETB 220.00",
+      status: "Unavailable",
+      isSpecial: false,
+    },
+    {
+      id: 2,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Cinnamon Mocha Delight",
+      ingredients:
+        "Cinnamon Mocha Delight: Rich espresso mixed with steamed milk, cocoa powder, and a sprinkle of cinnamon.",
+      category: "Hot Beverages",
+      price: "ETB 450.00",
+      status: "Available",
+      isSpecial: true,
+    },
+    {
+      id: 3,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Ginger Turmeric Tea",
+      ingredients:
+        "Ginger Turmeric Tea: A soothing infusion of ginger, turmeric, and honey, perfect for relaxation.",
+      category: "Hot Beverages",
+      price: "ETB 320.00",
+      status: "Available",
+      isSpecial: false,
+    },
+    {
+      id: 4,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Vanilla Bean Hot Chocolate",
+      ingredients:
+        "Vanilla Bean Hot Chocolate: Creamy hot chocolate infused with real vanilla bean for a sweet touch.",
+      category: "Hot Beverages",
+      price: "ETB 400.00",
+      status: "Available",
+      isSpecial: true,
+    },
+    {
+      id: 5,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Minty Green Tea",
+      ingredients:
+        "Minty Green Tea: Refreshing green tea with a burst of mint leaves for a cooling effect.",
+      category: "Hot Beverages",
+      price: "ETB 270.00",
+      status: "Available",
+      isSpecial: true,
+    },
+    {
+      id: 6,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Caramel Apple Cider",
+      ingredients:
+        "Caramel Apple Cider: Warm apple cider with caramel drizzle and a hint of cinnamon.",
+      category: "Hot Beverages",
+      price: "ETB 260.00",
+      status: "Available",
+      isSpecial: false,
+    },
+    {
+      id: 7,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Hazelnut Espresso",
+      ingredients:
+        "Hazelnut Espresso: Bold espresso blended with creamy hazelnut syrup for a nutty flavor.",
+      category: "Hot Beverages",
+      price: "ETB 230.00",
+      status: "Available",
+      isSpecial: false,
+    },
+    {
+      id: 8,
+      photo: "/placeholder.svg?height=40&width=40",
+      name: "Coconut Cream Hot Cocoa",
+      ingredients:
+        "Coconut Cream Hot Cocoa: Decadent hot cocoa topped with whipped coconut cream.",
+      category: "Hot Beverages",
+      price: "ETB 280.00",
+      status: "Unavailable",
+      isSpecial: false,
+    },
+  ]);
 
   const handleOpenEditCategoryModal = (category) => {
     setEditingCategory(category);
@@ -378,162 +473,12 @@ export default function AddMerchantPage({ onNavigateBack }) {
         <AddItemModal />
       )}
       {showDeleteConfirmModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">
-                Delete Menu Item
-              </h2>
-              <button
-                onClick={() => {
-                  setShowDeleteConfirmModal(false);
-                  setItemToDelete(null);
-                }}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg flex items-start space-x-3 mb-6">
-              <svg
-                className="w-6 h-6 flex-shrink-0 mt-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-              <div>
-                <p className="font-bold mb-1">
-                  Are you sure you want to delete an item from menu?
-                </p>
-                <p className="text-sm">
-                  Are you certain you wish to remove this item from the menu?
-                  Please be aware that this action will permanently delete the
-                  selected item.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowDeleteConfirmModal(false);
-                  setItemToDelete(null);
-                }}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={confirmDeleteItem}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Delete Menu Item
-              </button>
-            </div>
-          </div>
-        </div>
+        <DeleteConfirmModal />
       )}
 
       {/* Delete Category Confirmation Modal */}
       {showDeleteCategoryConfirmModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">
-                Delete Category
-              </h2>
-              <button
-                onClick={() => {
-                  setShowDeleteCategoryConfirmModal(false);
-                  setCategoryToDelete(null);
-                }}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 rounded-lg flex items-start space-x-3 mb-6">
-              <svg
-                className="w-6 h-6 flex-shrink-0 mt-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-              <div>
-                <p className="font-bold mb-1">
-                  Are you sure you want to delete this category?
-                </p>
-                <p className="text-sm">
-                  Are you certain you wish to remove this category from the
-                  menu? Please be aware that this action will affect menu items
-                  in the menu sections.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setShowDeleteCategoryConfirmModal(false);
-                  setCategoryToDelete(null);
-                }}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={confirmDeleteCategory}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Delete Category
-              </button>
-            </div>
-          </div>
-        </div>
+        <DeleteCategoryConfirmModal />
       )}
     </div>
   );

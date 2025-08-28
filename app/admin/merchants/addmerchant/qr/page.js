@@ -10,6 +10,19 @@ import {
 
 
 const BusinessQR = () => {
+
+  const handleRegenerateQrCode = () => {
+    alert("QR Code Regenerated (placeholder)");
+  };
+
+  const handleDownloadQrCode = () => {
+    alert("Downloading QR Code (placeholder)");
+  };
+
+  const handleCopyUrl = () => {
+    navigator.clipboard.writeText("https://www.arifmenu.com/foodzone");
+    alert("URL copied to clipboard!");
+  };
   return (
     <div className="bg-white rounded-2xl shadow-sm p-8 mb-8">
                 <h2 className="text-lg font-semibold text-gray-800 mb-6">
