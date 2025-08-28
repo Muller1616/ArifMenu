@@ -1,5 +1,5 @@
 "use client";
-import { CategoriesManagement } from "@/app/merchant/categories/page"
+import { MerchantQRCodesPage } from "@/app/merchant/qr/page"
 export default function MerchantDashboard({ user, onLogout }) {
   // return (<>
   //   <div className="p-10">
@@ -15,5 +15,5 @@ export default function MerchantDashboard({ user, onLogout }) {
   //   <CategoriesManagement />
   // </>
   // );
-  return <CategoriesManagement />;
+  return <MerchantQRCodesPage />;
 }
