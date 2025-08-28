@@ -1421,6 +1421,10 @@ video {
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
 }
+.rounded-l-none {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
 .rounded-tl-sm {
   border-top-left-radius: calc(var(--radius) - 4px);
 }
