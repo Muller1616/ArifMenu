@@ -9,88 +9,25 @@ import {
   QrCode,
   ArrowLeft,
   ArrowRight,
-  X,
-  ImagePlus,
 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 
 import { DeleteConfirmModal } from "@/components/merchant/modals/delete-confirm-modal";
-import { DeleteCategoryConfirmModal } from "@/components/merchant/modals/delete-confirmation-modal";      
+import { DeleteCategoryConfirmModal } from "@/components/merchant/modals/delete-confirmation-modal";
 import { AddItemModal } from "@/components/merchant/modals/add-item-modal";
 import { AddCategoryModal } from "@/components/merchant/modals/add-category-modal";
-import BusinessInfo from "@/app/admin//merchants/addmerchant/info/page"
-import BusinessAddress from "@/app/admin//merchants/addmerchant/address/page"
-import BusinessCategory from "@/app/admin//merchants/addmerchant/category/page"
-import BusinessQR from "@/app/admin//merchants/addmerchant/qr/page"
-import BusinessManage from "@/app/admin//merchants/addmerchant/manage/page"
+
+import BusinessInfo from "@/app/admin/merchants/addmerchant/info/page";
+import BusinessAddress from "@/app/admin/merchants/addmerchant/address/page";
+import BusinessCategory from "@/app/admin/merchants/addmerchant/category/page";
+import BusinessQR from "@/app/admin/merchants/addmerchant/qr/page";
+import BusinessManage from "@/app/admin/merchants/addmerchant/manage/page";
 
 export default function AddMerchantPage({ onNavigateBack }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-  const [showDeleteCategoryConfirmModal, setShowDeleteCategoryConfirmModal] =
-    useState(false);
-  const [categoryToDelete, setCategoryToDelete] = useState(null);
-  const [editingCategory, setEditingCategory] = useState(null);
-  const [selectedCategoryPhotoPreview, setSelectedCategoryPhotoPreview] =
-    useState(null); // New state for category photo preview
-  const [categories, setCategories] = useState([
-    {
-      id: 1,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Breakfast",
-      description: "Breakfast",
-      addedOn: "June 12, 2025",
-      status: "Inactive",
-    },
-    {
-      id: 2,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Hot Drinks",
-      description: "Hot Drinks",
-      addedOn: "July 19, 2025",
-      status: "Active",
-    },
-    {
-      id: 3,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Cold Beverages",
-      description: "Cold Beverages",
-      addedOn: "June 28, 2025",
-      status: "Active",
-    },
-    {
-      id: 4,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Lunch",
-      description: "Lunch",
-      addedOn: "July 5, 2025",
-      status: "Active",
-    },
-    {
-      id: 5,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Dinner",
-      description: "Dinner",
-      addedOn: "Jun 10, 2025",
-      status: "Active",
-    },
-  ]);
-
-  
-
+  const [showDeleteCategoryConfirmModal, setShowDeleteCategoryConfirmModal] = useState(false);
   const [showAddItemModal, setShowAddItemModal] = useState(false);
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState(null);
-  const [editingMenuItem, setEditingMenuItem] = useState(null);
-  const [selectedMenuItemPhotoPreview, setSelectedMenuItemPhotoPreview] =
-    useState(null); // New state for menu item photo preview
 
   const steps = [
     { id: 1, name: "Business Details", icon: ImageIcon },
@@ -101,320 +38,29 @@ export default function AddMerchantPage({ onNavigateBack }) {
   ];
 
   const handleNext = () => {
-    if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1);
-    }
+    if (currentStep < steps.length) setCurrentStep(currentStep + 1);
   };
 
   const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    } else {
-      onNavigateBack();
-    }
-  };
-
-  const handleOpenAddCategoryModal = () => {
-    setEditingCategory(null);
-    setSelectedCategoryPhotoPreview(null); // Clear photo preview for new category
-    setShowAddCategoryModal(true);
-  };
-
-  const [menuItems, setMenuItems] = useState([
-    {
-      id: 1,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Spicy Chai Latte",
-      ingredients:
-        "Spicy Chai Latte: A warm blend of black tea, cinnamon, ginger, and a hint of chili pepper.",
-      category: "Hot Beverages",
-      price: "ETB 220.00",
-      status: "Unavailable",
-      isSpecial: false,
-    },
-    {
-      id: 2,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Cinnamon Mocha Delight",
-      ingredients:
-        "Cinnamon Mocha Delight: Rich espresso mixed with steamed milk, cocoa powder, and a sprinkle of cinnamon.",
-      category: "Hot Beverages",
-      price: "ETB 450.00",
-      status: "Available",
-      isSpecial: true,
-    },
-    {
-      id: 3,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Ginger Turmeric Tea",
-      ingredients:
-        "Ginger Turmeric Tea: A soothing infusion of ginger, turmeric, and honey, perfect for relaxation.",
-      category: "Hot Beverages",
-      price: "ETB 320.00",
-      status: "Available",
-      isSpecial: false,
-    },
-    {
-      id: 4,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Vanilla Bean Hot Chocolate",
-      ingredients:
-        "Vanilla Bean Hot Chocolate: Creamy hot chocolate infused with real vanilla bean for a sweet touch.",
-      category: "Hot Beverages",
-      price: "ETB 400.00",
-      status: "Available",
-      isSpecial: true,
-    },
-    {
-      id: 5,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Minty Green Tea",
-      ingredients:
-        "Minty Green Tea: Refreshing green tea with a burst of mint leaves for a cooling effect.",
-      category: "Hot Beverages",
-      price: "ETB 270.00",
-      status: "Available",
-      isSpecial: true,
-    },
-    {
-      id: 6,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Caramel Apple Cider",
-      ingredients:
-        "Caramel Apple Cider: Warm apple cider with caramel drizzle and a hint of cinnamon.",
-      category: "Hot Beverages",
-      price: "ETB 260.00",
-      status: "Available",
-      isSpecial: false,
-    },
-    {
-      id: 7,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Hazelnut Espresso",
-      ingredients:
-        "Hazelnut Espresso: Bold espresso blended with creamy hazelnut syrup for a nutty flavor.",
-      category: "Hot Beverages",
-      price: "ETB 230.00",
-      status: "Available",
-      isSpecial: false,
-    },
-    {
-      id: 8,
-      photo: "/placeholder.svg?height=40&width=40",
-      name: "Coconut Cream Hot Cocoa",
-      ingredients:
-        "Coconut Cream Hot Cocoa: Decadent hot cocoa topped with whipped coconut cream.",
-      category: "Hot Beverages",
-      price: "ETB 280.00",
-      status: "Unavailable",
-      isSpecial: false,
-    },
-  ]);
-
-  const handleOpenEditCategoryModal = (category) => {
-    setEditingCategory(category);
-    setSelectedCategoryPhotoPreview(category.photo); // Set current photo as preview for editing
-    setShowAddCategoryModal(true);
-  };
-
-  const handleCategoryPhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedCategoryPhotoPreview(URL.createObjectURL(file));
-    } else {
-      setSelectedCategoryPhotoPreview(null);
-    }
-  };
-
-  const handleSaveCategory = (categoryData) => {
-    const finalPhoto =
-      selectedCategoryPhotoPreview || "/placeholder.svg?height=40&width=40";
-
-    if (editingCategory) {
-      setCategories((prevCategories) =>
-        prevCategories.map((cat) =>
-          cat.id === editingCategory.id
-            ? { ...cat, ...categoryData, photo: finalPhoto }
-            : cat
-        )
-      );
-    } else {
-      setCategories((prevCategories) => [
-        ...prevCategories,
-        {
-          id:
-            prevCategories.length > 0
-              ? Math.max(...prevCategories.map((c) => c.id)) + 1
-              : 1,
-          ...categoryData,
-          photo: finalPhoto,
-          addedOn: new Date().toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          }),
-        },
-      ]);
-    }
-    setShowAddCategoryModal(false);
-    setEditingCategory(null);
-    setSelectedCategoryPhotoPreview(null); // Clear preview after saving
-  };
-
-  const handleDeleteCategory = (categoryId) => {
-    setCategoryToDelete(categoryId);
-    setShowDeleteCategoryConfirmModal(true);
-  };
-
-  const confirmDeleteCategory = () => {
-    if (categoryToDelete) {
-      setCategories((prevCategories) =>
-        prevCategories.filter((cat) => cat.id !== categoryToDelete)
-      );
-      setCategoryToDelete(null);
-      setShowDeleteCategoryConfirmModal(false);
-    }
-  };
-
-  const handleOpenAddItemModal = () => {
-    setEditingMenuItem(null);
-    setSelectedMenuItemPhotoPreview(null); // Clear photo preview for new item
-    setShowAddItemModal(true);
-  };
-
-  const handleOpenEditItemModal = (item) => {
-    setEditingMenuItem(item);
-    setSelectedMenuItemPhotoPreview(item.photo); // Set current photo as preview for editing
-    setShowAddItemModal(true);
-  };
-
-  const handleMenuItemPhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedMenuItemPhotoPreview(URL.createObjectURL(file));
-    } else {
-      setSelectedMenuItemPhotoPreview(null);
-    }
-  };
-
-  const handleSaveMenuItem = (itemData) => {
-    const finalPhoto =
-      selectedMenuItemPhotoPreview || "/placeholder.svg?height=40&width=40";
-
-    if (editingMenuItem) {
-      setMenuItems((prevItems) =>
-        prevItems.map((item) =>
-          item.id === editingMenuItem.id
-            ? { ...item, ...itemData, photo: finalPhoto }
-            : item
-        )
-      );
-    } else {
-      setMenuItems((prevItems) => [
-        ...prevItems,
-        {
-          id:
-            prevItems.length > 0
-              ? Math.max(...prevItems.map((i) => i.id)) + 1
-              : 1,
-          ...itemData,
-          photo: finalPhoto,
-          isSpecial: false,
-        },
-      ]);
-    }
-    setShowAddItemModal(false);
-    setEditingMenuItem(null);
-    setSelectedMenuItemPhotoPreview(null); // Clear preview after saving
-  };
-
-  const handleToggleMenuItemStatus = (itemId, newStatus) => {
-    setMenuItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId
-          ? { ...item, status: newStatus, isSpecial: false }
-          : item
-      )
-    );
-  };
-
-  const handleToggleMenuItemSpecial = (itemId) => {
-    setMenuItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, isSpecial: !item.isSpecial } : item
-      )
-    );
-  };
-
-  const handleDeleteMenuItem = (itemId) => {
-    setItemToDelete(itemId);
-    setShowDeleteConfirmModal(true);
-  };
-
-  const confirmDeleteItem = () => {
-    if (itemToDelete) {
-      setMenuItems((prevItems) =>
-        prevItems.filter((item) => item.id !== itemToDelete)
-      );
-      setItemToDelete(null);
-      setShowDeleteConfirmModal(false);
-    }
-  };
-
-
-  const uniqueCategories = [
-    "all",
-    ...new Set(menuItems.map((item) => item.category)),
-  ];
-  const uniqueStatuses = [
-    "all",
-    ...new Set(menuItems.map((item) => item.status)),
-  ];
-
-  const handleRegenerateQrCode = () => {
-    alert("QR Code Regenerated (placeholder)");
-  };
-
-  const handleDownloadQrCode = () => {
-    alert("Downloading QR Code (placeholder)");
-  };
-
-  const handleCopyUrl = () => {
-    navigator.clipboard.writeText("https://www.arifmenu.com/foodzone");
-    alert("URL copied to clipboard!");
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
+    else onNavigateBack();
   };
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 1:
-        return (
-          <BusinessInfo />
-        );
-      case 2:
-        return (
-          <BusinessAddress />
-        );
-      case 3:
-        return (
-          <BusinessCategory />
-        );
-      case 4:
-        return (
-          <BusinessManage />
-        );
-      case 5:
-        return (
-          <BusinessQR />
-        );
-      default:
-        return null;
+      case 1: return <BusinessInfo />;
+      case 2: return <BusinessAddress />;
+      case 3: return <BusinessCategory />;
+      case 4: return <BusinessManage />;
+      case 5: return <BusinessQR />;
+      default: return null;
     }
   };
 
   return (
-    <div className="p-8 bg-[#f6f7f8] rounded-2xl min-h-screen">
+    <div className="p-8 bg-white rounded-2xl min-h-screen overflow-x-hidden">
       {/* Step Navigation */}
-      <div className="bg-white rounded-2xl shadow-sm p-6 mb-8 flex items-center justify-around text-gray-600 text-sm font-medium">
+      <div className="mb-4 flex items-center justify-around text-gray-600 text-sm font-medium">
         {steps.map((step) => (
           <div key={step.id} className="flex flex-col items-center group">
             <button
@@ -432,10 +78,13 @@ export default function AddMerchantPage({ onNavigateBack }) {
         ))}
       </div>
 
-      {renderStepContent()}
+      {/* Step Content (only this can scroll horizontally if needed) */}
+      <div className="overflow-x-auto">
+        {renderStepContent()}
+      </div>
 
       {/* Navigation Buttons */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-6">
         <button
           onClick={handlePrevious}
           className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg flex items-center hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -444,6 +93,7 @@ export default function AddMerchantPage({ onNavigateBack }) {
           <ArrowLeft className="w-5 h-5 mr-2" />
           Previous
         </button>
+
         <div className="flex items-center space-x-2">
           {steps.map((_, index) => (
             <div
@@ -451,9 +101,10 @@ export default function AddMerchantPage({ onNavigateBack }) {
               className={`w-2 h-2 rounded-full ${
                 index + 1 === currentStep ? "bg-green-600" : "bg-gray-300"
               }`}
-            ></div>
+            />
           ))}
         </div>
+
         <button
           onClick={handleNext}
           className="px-4 py-2 bg-green-600 text-white rounded-lg flex items-center hover:bg-green-700 transition-colors"
@@ -463,23 +114,11 @@ export default function AddMerchantPage({ onNavigateBack }) {
         </button>
       </div>
 
-      {/* Add/Edit Category Modal */}
-      {showAddCategoryModal && (
-        <AddCategoryModal />
-      )}
-
-      {/* Add/Edit Menu Item Modal */}
-      {showAddItemModal && (
-        <AddItemModal />
-      )}
-      {showDeleteConfirmModal && (
-        <DeleteConfirmModal />
-      )}
-
-      {/* Delete Category Confirmation Modal */}
-      {showDeleteCategoryConfirmModal && (
-        <DeleteCategoryConfirmModal />
-      )}
+      {/* Modals */}
+      {showAddCategoryModal && <AddCategoryModal />}
+      {showAddItemModal && <AddItemModal />}
+      {showDeleteConfirmModal && <DeleteConfirmModal />}
+      {showDeleteCategoryConfirmModal && <DeleteCategoryConfirmModal />}
     </div>
   );
 }
