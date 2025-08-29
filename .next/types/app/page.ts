@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 // File: C:\Users\hp\Videos\Arifmenu\ArifMenu\app\page.js
-=======
-// File: C:\Users\hp\Music\ArifMenu\ArifMenu\app\page.js
->>>>>>> a231f7f98de43e263bf9a9966233324687b00267
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
