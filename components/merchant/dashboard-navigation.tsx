@@ -15,22 +15,22 @@ interface DashboardNavigationProps {
 
 export default function MerchantDashboardNavigation({ activeTab, onTabChange }: DashboardNavigationProps) {
   return (
-    <nav className="bg-gray-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex space-x-1">
+    <nav className="w-full">
+      <div className="px-2 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-start sm:justify-between">
           {navigationItems.map((item) => (
             <button
               key={item.id}
               onClick={() => onTabChange(item.id)}
               className={cn(
-                "flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 mx-1",
+                "flex items-start gap-2 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-medium rounded-xl transition-all duration-200",
                 activeTab === item.id
                   ? "bg-[#3CA32B] text-white shadow-sm"
                   : "text-gray-600 hover:text-gray-800 hover:bg-gray-100",
               )}
             >
               <NavigationIcon type={item.icon} />
-              {item.label}
+              <span className="truncate">{item.label}</span>
             </button>
           ))}
         </div>
@@ -40,7 +40,7 @@ export default function MerchantDashboardNavigation({ activeTab, onTabChange }: 
 }
 
 function NavigationIcon({ type }: { type: string }) {
-  const iconClass = "w-4 h-4"
+  const iconClass = "w-4 h-4 sm:w-5 sm:h-5"
 
   switch (type) {
     case "grid":
