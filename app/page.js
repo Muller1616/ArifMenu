@@ -4,7 +4,7 @@ import { useState } from "react";
 import LoginScreen from "./auth/login/page";
 import ForgotPasswordScreen from "./auth/forgot/page";
 import CheckInboxScreen from "./auth/checkinbox/page";
-import MerchantDashboard from "./merchant/dashboard/page";  
+import { MerchantDashboard } from "./merchant/dashboard/page";  
 import AdminDashboard from "./admin/dashboard/page";        
 import CreatePasswordScreen from "./auth/newpassword/page";
 
@@ -38,6 +38,7 @@ export default function App() {
         return <AdminDashboard user={user} onLogout={handleLogout} />;
       } else if (user.role === "Merchant") {
         return <MerchantDashboard user={user} onLogout={handleLogout} />;
+        
       }
     }
 
