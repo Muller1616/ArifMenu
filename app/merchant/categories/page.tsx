@@ -1,12 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { AddCategoryModal } from "@/components/merchant/modals/add-category-modal"
-import { DeleteConfirmationModal } from "@/components/merchant/modals/delete-confirmation-modal"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { AddCategoryModal } from "@/components/merchant/modals/add-category-modal";
+import { DeleteConfirmationModal } from "@/components/merchant/modals/delete-confirmation-modal";
 
 const categoriesData = [
   {
@@ -49,22 +54,32 @@ const categoriesData = [
     addedOn: "June 10, 2025",
     status: "Active",
   },
-]
+];
 
 export function CategoriesManagement() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [categories, setCategories] = useState(categoriesData)
-  const [showAddModal, setShowAddModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState<any>(null)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categories, setCategories] = useState(categoriesData);
+  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const filteredCategories = categories.filter((category) =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+    category.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const handleAddCategory = (categoryData: any) => {
+const handleAddOrEditCategory = (categoryData: any) => {
+  if (isEditMode && selectedCategory) {
+    // Edit existing category
+    setCategories(
+      categories.map((cat) =>
+        cat.id === selectedCategory.id ? { ...cat, ...categoryData } : cat
+      )
+    );
+  } else {
+    // Add new category
     const newCategory = {
-      id: categories.length + 1,
+      id: Date.now(), // unique ID based on timestamp
       ...categoryData,
       addedOn: new Date().toLocaleDateString("en-US", {
         year: "numeric",
@@ -72,26 +87,36 @@ export function CategoriesManagement() {
         day: "numeric",
       }),
       status: "Active",
-    }
-    setCategories([...categories, newCategory])
-    setShowAddModal(false)
+    };
+    setCategories([...categories, newCategory]);
   }
+  setShowModal(false);
+  setSelectedCategory(null);
+  setIsEditMode(false);
+};
+
 
   const handleDeleteCategory = (category: any) => {
-    setSelectedCategory(category)
-    setShowDeleteModal(true)
-  }
+    setSelectedCategory(category);
+    setShowDeleteModal(true);
+  };
 
   const confirmDelete = () => {
-    setCategories(categories.filter((cat) => cat.id !== selectedCategory.id))
-    setShowDeleteModal(false)
-    setSelectedCategory(null)
-  }
+    setCategories(categories.filter((cat) => cat.id !== selectedCategory.id));
+    setShowDeleteModal(false);
+    setSelectedCategory(null);
+  };
+
+  const handleEditCategory = (category: any) => {
+    setSelectedCategory(category);
+    setIsEditMode(true);
+    setShowModal(true);
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex-1 max-w-md">
           <div className="relative">
             <svg
@@ -115,166 +140,139 @@ export function CategoriesManagement() {
             />
           </div>
         </div>
-        <Button className="bg-[#3CA32B] hover:bg-[#2d8a22] text-white" onClick={() => setShowAddModal(true)}>
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        <Button
+          className="bg-[#3CA32B] hover:bg-[#2d8a22] text-white flex items-center justify-center"
+          onClick={() => {
+            setShowModal(true);
+            setIsEditMode(false);
+          }}
+        >
+          <svg
+            className="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 4v16m8-8H4"
+            />
           </svg>
-          Add New Category
+          {isEditMode ? "Edit Category" : "Add New Category"}
         </Button>
       </div>
 
       {/* Categories Table */}
-      <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Photo
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Category Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Description
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Added on
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+      <div className="bg-white rounded-lg shadow-sm border overflow-x-auto">
+        <table className="w-full min-w-[600px]">
+          <thead className="bg-gray-50 border-b">
+            <tr>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                #
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Photo
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Category Name
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Description
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Added on
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {filteredCategories.map((category, index) => (
+              <tr key={category.id} className="hover:bg-gray-50">
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">
+                  {index + 1}
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap">
+                  <img
+                    src={category.image || "/placeholder.svg"}
+                    alt={category.name}
+                    className="w-12 h-12 rounded-lg object-cover"
+                  />
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {category.name}
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {category.description}
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
+                  {category.addedOn}
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap">
+                  <Badge
+                    className={
+                      category.status === "Active"
+                        ? "bg-emerald-100 text-emerald-800"
+                        : "bg-red-100 text-red-800"
+                    }
+                  >
+                    {category.status}
+                  </Badge>
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        ⋮
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem
+                        onClick={() => handleEditCategory(category)}
+                      >
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="text-red-600"
+                        onClick={() => handleDeleteCategory(category)}
+                      >
+                        Remove
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredCategories.map((category, index) => (
-                <tr key={category.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{index + 1}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <img
-                      src={category.image || "/placeholder.svg"}
-                      alt={category.name}
-                      className="w-12 h-12 rounded-lg object-cover"
-                    />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{category.name}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{category.description}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">{category.addedOn}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <Badge
-                      variant={category.status === "Active" ? "default" : "secondary"}
-                      className={
-                        category.status === "Active"
-                          ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-100"
-                          : "bg-red-100 text-red-800 hover:bg-red-100"
-                      }
-                    >
-                      {category.status}
-                    </Badge>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600" onClick={() => handleDeleteCategory(category)}>
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
-                          Remove
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination */}
-        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-          <div className="flex-1 flex justify-between sm:hidden">
-            <Button variant="outline" size="sm">
-              Previous
-            </Button>
-            <Button variant="outline" size="sm">
-              Next
-            </Button>
-          </div>
-          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                « Previous
-              </Button>
-              <Button variant="outline" size="sm" className="bg-[#3CA32B] text-white border-[#3CA32B]">
-                1
-              </Button>
-              <Button variant="outline" size="sm">
-                2
-              </Button>
-              <Button variant="outline" size="sm">
-                3
-              </Button>
-              <span className="px-2 py-1 text-sm text-gray-500">...</span>
-              <Button variant="outline" size="sm">
-                10
-              </Button>
-              <Button variant="outline" size="sm">
-                Next »
-              </Button>
-            </div>
-          </div>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Modals */}
-      <AddCategoryModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} onSubmit={handleAddCategory} />
+      <AddCategoryModal
+        isOpen={showModal}
+        onClose={() => {
+          setShowModal(false);
+          setSelectedCategory(null);
+          setIsEditMode(false);
+        }}
+        onSubmit={handleAddOrEditCategory}
+        category={selectedCategory}
+      />
 
       <DeleteConfirmationModal
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={confirmDelete}
-        title="Are you sure you want to delete an item from menu?"
-        message="Are you certain you wish to remove this category from the menu? Please be aware that this action affect menu items in the menu sections."
+        title="Are you sure you want to delete this category?"
+        message="This will remove the category and it may affect menu items."
         confirmText="Delete Category"
       />
     </div>
-  )
+  );
 }

@@ -1,8 +1,6 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -13,14 +11,19 @@ interface AddCategoryModalProps {
   isOpen: boolean
   onClose: () => void
   onSubmit: (data: any) => void
+  category?: any
 }
 
-export function AddCategoryModal({ isOpen, onClose, onSubmit }: AddCategoryModalProps) {
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    image: "",
-  })
+export function AddCategoryModal({ isOpen, onClose, onSubmit, category }: AddCategoryModalProps) {
+  const [formData, setFormData] = useState({ name: "", description: "", image: "" })
+
+  useEffect(() => {
+    if (category) {
+      setFormData({ name: category.name, description: category.description, image: category.image })
+    } else {
+      setFormData({ name: "", description: "", image: "" })
+    }
+  }, [category])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,31 +36,28 @@ export function AddCategoryModal({ isOpen, onClose, onSubmit }: AddCategoryModal
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      // In a real app, you'd upload the file and get a URL
       setFormData({ ...formData, image: URL.createObjectURL(file) })
     }
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Add New Category</DialogTitle>
-          <button
-            onClick={onClose}
-            className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-          >
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+      <DialogContent className="sm:max-w-md w-full bg-white rounded-2xl shadow-lg p-6">
+        <DialogHeader className="relative">
+          <DialogTitle className="text-lg font-semibold text-gray-800">
+            {category ? "Edit Category" : "Add New Category"}
+          </DialogTitle>
+          
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 mt-2">
           {/* Image Upload */}
           <div className="space-y-2">
             {formData.image ? (
-              <div className="relative border-2 border-gray-300 rounded-lg p-4">
+              <div
+                key={formData.image} // ensure unique key for React
+                className="relative border-2 border-gray-300 rounded-lg p-4 bg-gray-50"
+              >
                 <img
                   src={formData.image || "/placeholder.svg"}
                   alt="Category preview"
@@ -71,14 +71,17 @@ export function AddCategoryModal({ isOpen, onClose, onSubmit }: AddCategoryModal
                   ×
                 </button>
                 <div className="mt-2 text-center">
-                  <label className="text-[#3CA32B] cursor-pointer underline text-sm">
+                  <label className="text-[#3CA32B] cursor-pointer underline text-sm font-medium">
                     Change image
                     <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </label>
                 </div>
               </div>
             ) : (
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+              <div
+                key="placeholder" // unique key for placeholder
+                className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#3CA32B] transition-colors bg-gray-50"
+              >
                 <div className="flex flex-col items-center space-y-2">
                   <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -90,7 +93,7 @@ export function AddCategoryModal({ isOpen, onClose, onSubmit }: AddCategoryModal
                   </svg>
                   <div className="text-sm text-gray-600">
                     Drop logo here or{" "}
-                    <label className="text-[#3CA32B] cursor-pointer underline">
+                    <label className="text-[#3CA32B] cursor-pointer underline font-medium">
                       browse
                       <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                     </label>
@@ -101,9 +104,9 @@ export function AddCategoryModal({ isOpen, onClose, onSubmit }: AddCategoryModal
             )}
           </div>
 
-          {/* Category Name */}
+          {/* Name Field */}
           <div className="space-y-2">
-            <Label htmlFor="categoryName">
+            <Label htmlFor="categoryName" className="font-medium text-gray-700">
               Category Name <span className="text-red-500">*</span>
             </Label>
             <Input
@@ -111,13 +114,14 @@ export function AddCategoryModal({ isOpen, onClose, onSubmit }: AddCategoryModal
               placeholder="Enter category name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="border-gray-300 focus:border-[#3CA32B] focus:ring focus:ring-[#3CA32B]/50 bg-white text-gray-900"
               required
             />
           </div>
 
-          {/* Category Description */}
+          {/* Description Field */}
           <div className="space-y-2">
-            <Label htmlFor="categoryDescription">
+            <Label htmlFor="categoryDescription" className="font-medium text-gray-700">
               Category Description <span className="text-red-500">*</span>
             </Label>
             <Textarea
@@ -126,17 +130,26 @@ export function AddCategoryModal({ isOpen, onClose, onSubmit }: AddCategoryModal
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={4}
+              className="border-gray-300 focus:border-[#3CA32B] focus:ring focus:ring-[#3CA32B]/50 bg-white text-gray-900"
               required
             />
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1 bg-transparent">
+          <div className="flex gap-3 pt-4 flex-col sm:flex-row">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onClose}
+              className="flex-1 bg-white border-gray-300 hover:bg-gray-50 text-gray-700"
+            >
               Cancel
             </Button>
-            <Button type="submit" className="flex-1 bg-[#3CA32B] hover:bg-[#2d8a24]">
-              Add Category
+            <Button
+              type="submit"
+              className="flex-1 bg-[#3CA32B] hover:bg-[#2d8a24] text-white shadow-md"
+            >
+              {category ? "Update Category" : "Add Category"}
             </Button>
           </div>
         </form>
