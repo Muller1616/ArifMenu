@@ -46,7 +46,7 @@ export function AddItemModal({ isOpen, onClose, onSubmit }: AddItemModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-white rounded-2xl shadow-md p-6">
+      <DialogContent className="sm:max-w-md bg-white rounded-xl shadow-md p-6">
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold text-gray-900">Add New Item</DialogTitle>
           <button
@@ -59,9 +59,9 @@ export function AddItemModal({ isOpen, onClose, onSubmit }: AddItemModalProps) {
           </button>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5 mt-2">
+        <form onSubmit={handleSubmit} className="space-y-5 mt-2 rounded-xl">
           {/* Image Upload */}
-          <div className="space-y-2">
+          <div className="space-y-2 rounded-xl">
             {formData.image ? (
               <div className="relative border-2 border-gray-200 rounded-lg p-4 bg-gray-50">
                 <img
@@ -118,6 +118,7 @@ export function AddItemModal({ isOpen, onClose, onSubmit }: AddItemModalProps) {
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               required
+              className="rounded-xl"
             />
           </div>
 
@@ -131,7 +132,7 @@ export function AddItemModal({ isOpen, onClose, onSubmit }: AddItemModalProps) {
                 value={formData.category}
                 onValueChange={(value) => setFormData({ ...formData, category: value })}
               >
-                <SelectTrigger className="bg-white border border-gray-300">
+                <SelectTrigger className="bg-white border rounded-xl border-gray-300">
                   <SelectValue placeholder="Select item category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -149,7 +150,7 @@ export function AddItemModal({ isOpen, onClose, onSubmit }: AddItemModalProps) {
                 Price <span className="text-red-500">*</span>
               </Label>
               <div className="flex">
-                <div className="flex items-center px-3 bg-gray-50 border border-r-0 rounded-l-md text-sm text-gray-500">
+                <div className="flex items-center px-3 bg-gray-50 border border-r-0 rounded-l-xl text-sm text-gray-500">
                   ETB
                 </div>
                 <Input
@@ -157,7 +158,7 @@ export function AddItemModal({ isOpen, onClose, onSubmit }: AddItemModalProps) {
                   placeholder="Enter Item price"
                   value={formData.price}
                   onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                  className="rounded-l-none"
+                  className="rounded-l-none outline-0"
                   required
                 />
               </div>
@@ -175,16 +176,17 @@ export function AddItemModal({ isOpen, onClose, onSubmit }: AddItemModalProps) {
               value={formData.ingredients}
               onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
               rows={4}
+              className="rounded-xl"
               required
             />
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1 bg-white border border-gray-300 text-gray-700">
+          <div className="flex gap-3 pt-4 rounded-xl">
+            <Button type="button" variant="outline" onClick={onClose} className="flex-1 bg-white border rounded-xl border-gray-300 text-gray-700">
               Cancel
             </Button>
-            <Button type="submit" className="flex-1 bg-green-600 hover:bg-green-700 text-white">
+            <Button type="submit" className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl">
               Add Item to menu
             </Button>
           </div>
